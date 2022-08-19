@@ -1,0 +1,612 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1726182683, guid: a4865f1ab4504ed8a368670db22f409c, type: 3}
+  m_Name: AOTGenerationConfig
+  m_EditorClassIdentifier: 
+  automateBeforeBuilds: 1
+  deleteDllAfterBuilds: 1
+  AutomateForAllAOTPlatforms: 1
+  automateForPlatforms: 090000000d000000
+  lastScan: 637942789617124761
+  supportSerializedTypes:
+  - TypeName: System.Action, mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: UnityEngine.AnimationCurve, UnityEngine.CoreModule
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Makeover.Utils.AnimatorEventLink, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Data.BigChipData, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Data.BlockerData, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Data.BlockerType, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Data.BlockerTypeData, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Data.BonusComboType, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Data.BonusFxData, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Boolean, mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Data.BoolValueType, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Data.ChipData, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Data.ChipTweenData, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Data.ChipTypeData, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Makeover.Game.ChipViewProps, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Data.ColorObjectData, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Data.ColorObjectData+DamageFxData, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Makeover.Game.CoverInfoView, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Data.CoverType, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Data.CoverViewData, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Data.CurveValueType, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Data.CustomFxType, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Data.DamageType, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[Data.BlockerType, Assembly-CSharp],[Data.BlockerData,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[Data.BlockerType, Assembly-CSharp],[Data.BlockerTypeData,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[Data.BlockerType, Assembly-CSharp],[System.Int32,
+      mscorlib]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[Data.BonusComboType, Assembly-CSharp],[Data.BonusFxData,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[Data.BoolValueType, Assembly-CSharp],[System.Boolean,
+      mscorlib]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[Data.CoverType, Assembly-CSharp],[Data.CoverViewData,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[Data.CurveValueType, Assembly-CSharp],[UnityEngine.AnimationCurve,
+      UnityEngine.CoreModule]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[Data.CustomFxType, Assembly-CSharp],[UnityEngine.GameObject,
+      UnityEngine.CoreModule]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[Data.CustomFxType, Assembly-CSharp],[SfxEvent,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[Data.FloatValueType, Assembly-CSharp],[System.Single,
+      mscorlib]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[UnityEngine.GameObject, UnityEngine.CoreModule],[Data.PoolConfig+PoolingPrefabInfo,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[Data.ColorObjectData+DamageFxData,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[System.Int32,
+      mscorlib]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[Data.IntegerValueType, Assembly-CSharp],[System.Int32,
+      mscorlib]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[Data.MailsViewType, Assembly-CSharp],[Makeover.UI.Mail.MailTypeValueToggle,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[Data.MegaComboType, Assembly-CSharp],[Data.MegaData,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[Data.ObjectTweenType, Assembly-CSharp],[Data.ChipTweenData,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[Data.ObjectType, Assembly-CSharp],[Data.ChipData,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[Data.ObjectType, Assembly-CSharp],[Data.ChipTypeData,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[Data.ObjectType, Assembly-CSharp],[System.Int32,
+      mscorlib]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[Data.PortalEntranceType, Assembly-CSharp],[Data.PortalViewData,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[Data.ProfileValueType, Assembly-CSharp],[Makeover.Utils.AnimatorEventLink,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[Data.ProfileValueType, Assembly-CSharp],[System.Int32,
+      mscorlib]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[Data.ProfileValueType, Assembly-CSharp],[ResourcesData+ExchangeLot,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[Data.ProfileValueType, Assembly-CSharp],[ResourcesData+ExchangeLotTest,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[Data.ProfileValueType, Assembly-CSharp],[ResourcesData+ProfileItemInfo,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[Data.ProfileValueType, Assembly-CSharp],[UnityEngine.Sprite,
+      UnityEngine.CoreModule]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[Data.ScoresEventType, Assembly-CSharp],[System.Int32,
+      mscorlib]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[Data.SettingType, Assembly-CSharp],[System.Boolean,
+      mscorlib]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[Makeover.Services.Sfx.SfxEvents+SfxMeta,
+      Assembly-CSharp],[SfxEvent, Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[Makeover.Services.Sfx.SfxEvents+SfxMetaMusic,
+      Assembly-CSharp],[SfxEvent, Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[Makeover.Services.Sfx.SfxEvents+SfxMusicTypes,
+      Assembly-CSharp],[SfxEvent, Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[Makeover.Services.Sfx.SfxEvents+SfxVariousTypes,
+      Assembly-CSharp],[SfxEvent, Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: "System.Collections.Generic.Dictionary`2[[Data.Spe\u0441ialSpawnType,
+      Assembly-CSharp],[UnityEngine.Sprite, UnityEngine.CoreModule]], mscorlib"
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Int32,
+      mscorlib]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[SetImageByName,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[Utils.SfxMonoList+SfxEventTrigger,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.SpriteRenderer,
+      UnityEngine.CoreModule]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.String,
+      mscorlib]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Transform,
+      UnityEngine.CoreModule]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.EnumEqualityComparer`1[[Data.BlockerType,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.EnumEqualityComparer`1[[Data.BonusComboType,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.EnumEqualityComparer`1[[Data.BoolValueType,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.EnumEqualityComparer`1[[Data.CoverType,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.EnumEqualityComparer`1[[Data.CurveValueType,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.EnumEqualityComparer`1[[Data.CustomFxType,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.EnumEqualityComparer`1[[Data.FloatValueType,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.EnumEqualityComparer`1[[Data.IntegerValueType,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.EnumEqualityComparer`1[[Data.MailsViewType,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.EnumEqualityComparer`1[[Data.MegaComboType,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.EnumEqualityComparer`1[[Data.ObjectTweenType,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.EnumEqualityComparer`1[[Data.ObjectType,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.EnumEqualityComparer`1[[Data.PortalEntranceType,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.EnumEqualityComparer`1[[Data.ProfileValueType,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.EnumEqualityComparer`1[[Data.ScoresEventType,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.EnumEqualityComparer`1[[Makeover.Services.Sfx.SfxEvents+SfxMeta,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.EnumEqualityComparer`1[[Makeover.Services.Sfx.SfxEvents+SfxMetaMusic,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.EnumEqualityComparer`1[[Makeover.Services.Sfx.SfxEvents+SfxMusicTypes,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.EnumEqualityComparer`1[[Makeover.Services.Sfx.SfxEvents+SfxVariousTypes,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: "System.Collections.Generic.EnumEqualityComparer`1[[Data.Spe\u0441ialSpawnType,
+      Assembly-CSharp]], mscorlib"
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Single, mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Data.FloatValueType, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Data.FlyToGoalTween, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: FModEventParam, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: UnityEngine.GameObject, UnityEngine.CoreModule
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
+      mscorlib]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      mscorlib]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Makeover.UI.GoalItemUI, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.IEqualityComparer`1[[Data.BlockerType, Assembly-CSharp]],
+      mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.IEqualityComparer`1[[Data.BonusComboType,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.IEqualityComparer`1[[Data.BoolValueType,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.IEqualityComparer`1[[Data.CoverType, Assembly-CSharp]],
+      mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.IEqualityComparer`1[[Data.CurveValueType,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.IEqualityComparer`1[[Data.CustomFxType,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.IEqualityComparer`1[[Data.FloatValueType,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.IEqualityComparer`1[[UnityEngine.GameObject,
+      UnityEngine.CoreModule]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.IEqualityComparer`1[[System.Int32, mscorlib]],
+      mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.IEqualityComparer`1[[Data.IntegerValueType,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.IEqualityComparer`1[[Data.MailsViewType,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.IEqualityComparer`1[[Data.MegaComboType,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.IEqualityComparer`1[[Data.ObjectTweenType,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.IEqualityComparer`1[[Data.ObjectType, Assembly-CSharp]],
+      mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.IEqualityComparer`1[[Data.PortalEntranceType,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.IEqualityComparer`1[[Data.ProfileValueType,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.IEqualityComparer`1[[Data.ScoresEventType,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.IEqualityComparer`1[[Data.SettingType, Assembly-CSharp]],
+      mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.IEqualityComparer`1[[Makeover.Services.Sfx.SfxEvents+SfxMeta,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.IEqualityComparer`1[[Makeover.Services.Sfx.SfxEvents+SfxMetaMusic,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.IEqualityComparer`1[[Makeover.Services.Sfx.SfxEvents+SfxMusicTypes,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.IEqualityComparer`1[[Makeover.Services.Sfx.SfxEvents+SfxVariousTypes,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: "System.Collections.Generic.IEqualityComparer`1[[Data.Spe\u0441ialSpawnType,
+      Assembly-CSharp]], mscorlib"
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.IEqualityComparer`1[[System.String, mscorlib]],
+      mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Int32, mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Data.IntegerValueType, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: UnityEngine.Keyframe, UnityEngine.CoreModule
+    IsCustom: 0
+    Emit: 1
+  - TypeName: UnityEngine.Keyframe[], UnityEngine.CoreModule
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.List`1[[Data.ColorObjectData, Assembly-CSharp]],
+      mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.List`1[[FModEventParam, Assembly-CSharp]],
+      mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.List`1[[Data.ResourceInfo, Assembly-CSharp]],
+      mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.List`1[[Source.Core.Blocks.Base.SortingBy,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Data.MailsViewType, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Makeover.UI.Mail.MailTypeValueToggle, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Data.MegaComboType, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Data.MegaData, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Makeover.Game.Metagame.MetagameEntity, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Data.ObjectColor, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.ObjectEqualityComparer`1[[UnityEngine.GameObject,
+      UnityEngine.CoreModule]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Data.ObjectTweenType, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Data.ObjectType, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: FMOD.Studio.PARAMETER_ID, FMODUnity
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Data.PoolConfig+PoolingPrefabInfo, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Data.PortalEntranceType, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Data.PortalViewData, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Data.ProfileValueType, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Data.ResourceInfo, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: ResourcesData+ExchangeLot, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: ResourcesData+ExchangeLotTest, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: ResourcesData+ProfileItemInfo, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: UnityEngine.RuntimeAnimatorController, UnityEngine.AnimationModule
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.SByteEnumEqualityComparer`1[[Data.SettingType,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Data.ScoresEventType, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: UnityEngine.Rendering.SerializedDictionary`2[[Data.CoverType, Assembly-CSharp],[Data.CoverViewData,
+      Assembly-CSharp]], Unity.RenderPipelines.Core.Runtime
+    IsCustom: 0
+    Emit: 1
+  - TypeName: UnityEngine.Rendering.SerializedDictionary`2[[System.Int32, mscorlib],[Data.ColorObjectData+DamageFxData,
+      Assembly-CSharp]], Unity.RenderPipelines.Core.Runtime
+    IsCustom: 0
+    Emit: 1
+  - TypeName: UnityEngine.Rendering.SerializedDictionary`2[[System.Int32, mscorlib],[System.Int32,
+      mscorlib]], Unity.RenderPipelines.Core.Runtime
+    IsCustom: 0
+    Emit: 1
+  - TypeName: UnityEngine.Rendering.SerializedDictionary`2[[Data.ProfileValueType,
+      Assembly-CSharp],[UnityEngine.Sprite, UnityEngine.CoreModule]], Unity.RenderPipelines.Core.Runtime
+    IsCustom: 0
+    Emit: 1
+  - TypeName: UnityEngine.Rendering.SerializedDictionary`2[[System.String, mscorlib],[Utils.SfxMonoList+SfxEventTrigger,
+      Assembly-CSharp]], Unity.RenderPipelines.Core.Runtime
+    IsCustom: 0
+    Emit: 1
+  - TypeName: SetImageByName, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Data.SettingType, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: SfxEvent, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Makeover.Services.Sfx.SfxEvents+SfxMeta, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Makeover.Services.Sfx.SfxEvents+SfxMetaMusic, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Makeover.Services.Sfx.SfxEvents+SfxMusicTypes, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Makeover.Services.Sfx.SfxEvents+SfxVariousTypes, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Utils.SfxMonoList+SfxEventTrigger, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Source.Core.Blocks.Base.SortingBy, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: "Data.Spe\u0441ialSpawnType, Assembly-CSharp"
+    IsCustom: 0
+    Emit: 1
+  - TypeName: UnityEngine.Sprite, UnityEngine.CoreModule
+    IsCustom: 0
+    Emit: 1
+  - TypeName: UnityEngine.SpriteRenderer, UnityEngine.CoreModule
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.String, mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: UnityEngine.Transform, UnityEngine.CoreModule
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.UInt32, mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: UnityEngine.WrapMode, UnityEngine.CoreModule
+    IsCustom: 0
+    Emit: 1

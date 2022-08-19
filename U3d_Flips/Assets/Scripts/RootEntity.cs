@@ -37,6 +37,5 @@ public class RootEntity : IDisposable
     {
         foreach (var disposable in _diposables)
             disposable.Dispose();
-
     }
 }

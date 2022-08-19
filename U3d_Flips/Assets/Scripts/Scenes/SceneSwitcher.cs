@@ -105,7 +105,6 @@ public class SceneSwitcher : IDisposable
     {
         return new LevelSceneEntity(new LevelSceneEntity.Ctx
         {
-            scene = GameScenes.Level1,
         });
     }
     

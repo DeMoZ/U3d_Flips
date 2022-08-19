@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00bd730c2a07471da964858360b46b89, type: 3}
+  m_Name: GameSet
+  m_EditorClassIdentifier: 
+  table: {fileID: 3105442825360241376, guid: b2b3bddd42c064a7a9ec7f84675b22c2, type: 3}
+  interactableSets:
+  - type: 0
+    amount: 5
+    prefab: {fileID: 5719494121699220272, guid: 44e156e17400544588869232899ee81b, type: 3}
+  - type: 1
+    amount: 5
+    prefab: {fileID: -2623766277410879898, guid: 1c225655eeefe4114aa8b7481d55c661, type: 3}

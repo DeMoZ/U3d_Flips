@@ -34,7 +34,9 @@ public class MenuSceneEntity : IGameScene
             onClickNewGame = _onClickNewGame,
             onClickSettings = _onClickSettings,
         });
-        // Find UI
+        
+        // Find UI or instantiate from Addressable
+        // _ui = Addressable.Instantiate();
         _ui = UnityEngine.GameObject.FindObjectOfType<UiMenuScene>();
         
         _ui.SetCtx(new UiMenuScene.Ctx

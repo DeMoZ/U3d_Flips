@@ -1,0 +1,1 @@
+{"name":"Modules.DOTween.Editor","references":["Modules.DOTween","Modules.General","Modules.General.Editor","Unity.TextMeshPro","Unity.TextMeshPro.Editor"],"optionalUnityReferences":[],"includePlatforms":["Editor"],"excludePlatforms":[],"allowUnsafeCode":false,"overrideReferences":false,"precompiledReferences":[],"autoReferenced":true,"defineConstraints":[]}

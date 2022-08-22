@@ -6,7 +6,7 @@ public class Rotate : AbstractOperation
 {
     private OperationTypes _type = OperationTypes.Rotate;
 
-    protected override async Task Do(OperationTypes type)
+    protected override async void Do(OperationTypes type)
     {
         if (type != _type) return;
 

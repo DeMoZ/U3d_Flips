@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UniRx;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class LevelScenePm : IDisposable
 {
@@ -18,48 +16,34 @@ public class LevelScenePm : IDisposable
     private Ctx _ctx;
     private List<InteractableEntity> _interactables;
     private InteractableEntity _current;
+    private ReactiveCommand<OperationTypes> _onDoOperation;
 
     public LevelScenePm(Ctx ctx)
     {
         _ctx = ctx;
-
-        LoadPrefabs();
+        _interactables = new List<InteractableEntity>();
         CreateObjects();
 
         _ctx.onInteractionButtonClick.Subscribe(OnInteractionButtonClick);
     }
 
-    private void LoadPrefabs()
-    {
-    }
-
     private void CreateObjects()
     {
-        _interactables = new List<InteractableEntity>();
-        var table = UnityEngine.GameObject.Instantiate<GameObject>(_ctx.gameSet.table);
+        var table = UnityEngine.Object.Instantiate(_ctx.gameSet.table);
 
-        var onInteractStates = new ReactiveCommand<(InteractStates, PointerEventData)>();
-        var onSelect = new ReactiveCommand<InteractableView>();
+        var onSelect = new ReactiveCommand<InteractableEntity>();
         onSelect.Subscribe(OnInteractableSelected);
         foreach (var set in _ctx.gameSet.interactableSets)
         {
             for (var i = 0; i < set.amount; i++)
             {
-                var view = UnityEngine.GameObject.Instantiate<InteractableView>(set.prefab);
-                
-                InteractableEntity interactableEntity = new InteractableEntity(new InteractableEntity.Ctx
+                var interactableEntity = new InteractableEntity(new InteractableEntity.Ctx
                 {
+                    prefab = set.prefab,
                     operationsSet = _ctx.operationsSet,
-                    view = view,
                     type = set.type,
                     operations = set.operations,
-                });
-
-                view.SetCtx(new InteractableView.Ctx
-                {
                     onSelect = onSelect,
-                    operations = set.operations,
-                    
                 });
 
                 _interactables.Add(interactableEntity);
@@ -67,44 +51,30 @@ public class LevelScenePm : IDisposable
         }
     }
 
-    private void OnInteractableSelected(InteractableView view)
+    private void OnInteractableSelected(InteractableEntity interactable)
     {
-        var interactable = _interactables.FirstOrDefault(i => i.Data.view.Equals(view));
-
-        if (interactable != null)
+        if (_current != null)
         {
-            if (_current != interactable)
-            {
-                _current = interactable;
-                _ctx.onSelectInteractable.Execute(interactable.Data.operations);
-                // TODO select (visual)
-            }
-            else
-            {
-                if (_current != null)
-                {
-                    // TODO unselect
-                    // TODO unselect visual
-                }
-            }
+            // TODO unselect visual
+        }
+
+        if (_current == interactable)
+        {
+            _current = null;
+            _ctx.onSelectInteractable.Execute(new List<OperationTypes>());
         }
         else
         {
-            Debug.LogError($"[LevelScenePm] Interactable with id {view.name} does not exist");
+            _current = interactable;
+            _ctx.onSelectInteractable.Execute(interactable.Data.operations);
+            // TODO select (visual)
         }
     }
 
     private void OnInteractionButtonClick(OperationTypes operation)
     {
         Debug.Log($"[LevelScenePm] OnInteractionButtonClick");
-        if (_current == null)
-            return;
-        
-        _current.DoOperation (operation); 
-        {
-            
-        }
-        
+        _current?.DoOperation(operation);
     }
 
     public void Dispose()

@@ -8,7 +8,7 @@ public class InteractableView : MonoBehaviour, IPointerDownHandler, IPointerClic
 {
     public struct Ctx
     {
-        public ReactiveCommand<InteractableView> onSelect;
+        public ReactiveCommand onSelect;
         public ReactiveCommand<OperationTypes> onDoOperation;
         public List<OperationTypes> operations;
     }
@@ -24,7 +24,7 @@ public class InteractableView : MonoBehaviour, IPointerDownHandler, IPointerClic
     public void OnPointerClick(PointerEventData eventData)
     {
         Debug.Log($"OnPointerClick on {name}");
-        _ctx.onSelect.Execute(this);
+        _ctx.onSelect.Execute();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -40,7 +40,7 @@ public class InteractableView : MonoBehaviour, IPointerDownHandler, IPointerClic
     public virtual void OnInteract()
     {
         Debug.Log($"click on {name}");
-        _ctx.onSelect.Execute(this);
+        _ctx.onSelect.Execute();
     }
 
     public void OnPointerDown(PointerEventData eventData)

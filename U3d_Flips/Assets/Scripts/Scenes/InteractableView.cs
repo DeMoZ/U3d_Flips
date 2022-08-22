@@ -1,15 +1,17 @@
+using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class InteractableView : MonoBehaviour, IPointerDownHandler,IPointerUpHandler,IDragHandler
+public class InteractableView : MonoBehaviour, IPointerDownHandler, IPointerClickHandler, IPointerUpHandler,
+    IDragHandler
 {
     public struct Ctx
     {
-        public ReactiveCommand<(DragStates, PointerEventData)> onDragStates;
+        public ReactiveCommand<InteractableView> onSelect;
+        public ReactiveCommand<OperationTypes> onDoOperation;
+        public List<OperationTypes> operations;
     }
-    
-    [SerializeField] private InteractableTypes type;
     
     private Ctx _ctx;
 
@@ -18,18 +20,46 @@ public class InteractableView : MonoBehaviour, IPointerDownHandler,IPointerUpHan
         _ctx = ctx;
     }
 
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        Debug.Log($"OnPointerClick on {name}");
+        _ctx.onSelect.Execute(this);
+    }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        Debug.Log($"OnBeginDrag on {name}");
+    }
+
+    private void OnMouseUpAsButton()
+    {
+        OnInteract();
+    }
+
+    public virtual void OnInteract()
+    {
+        Debug.Log($"click on {name}");
+        _ctx.onSelect.Execute(this);
+    }
+
     public void OnPointerDown(PointerEventData eventData)
     {
-        _ctx.onDragStates.Execute((DragStates.StartDrag, eventData));
+        Debug.Log($"OnPointerDown on {name}");
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        _ctx.onDragStates.Execute((DragStates.EndDrag, eventData));
+        Debug.Log($"OnPointerUp on {name}");
+    }
+
+    public void OnMouseDown()
+    {
+        Debug.Log($"OnMouseDown on {name}");
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        _ctx.onDragStates.Execute((DragStates.ProcessDrag, eventData));
+        Debug.Log($"OnDrag on {name}");
     }
 }

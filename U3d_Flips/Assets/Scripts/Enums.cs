@@ -9,13 +9,13 @@ public enum InteractableTypes
     Flat,
     Volume,
 }
-public enum InteractionTypes
+public enum OperationTypes
 {
     Flip,
     Rotate,
 }
 
-public enum DragStates
+public enum InteractStates
 {
     Select,
     StartDrag,

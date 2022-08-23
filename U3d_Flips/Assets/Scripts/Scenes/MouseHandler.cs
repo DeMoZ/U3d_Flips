@@ -45,13 +45,8 @@ public class MouseHandler : IDisposable
     private void OnMouseSelect(InteractableView view)
     {
         var interactable = _ctx.interactables.Find(i => i.View == view);
-
-        //_ctx.onSelectInteractable.Execute(interactable);
         _ctx.current.Value = interactable;
-        // if (_ctx.current.Value != null)
-        // {
-        //     // TODO unselect visual
-        // }
+        
     }
     
     private void OnInteractableSelected(InteractableEntity interactable)

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class LevelScenePm : IDisposable
 {
@@ -20,76 +21,82 @@ public class LevelScenePm : IDisposable
     private InteractableEntity _previous;
     private ReactiveCommand<OperationTypes> _onDoOperation;
     private List<IDisposable> _disposables;
+    private ReactiveProperty<Vector3> _mousePosition;
 
     public LevelScenePm(Ctx ctx)
     {
         _ctx = ctx;
-        _disposables = new();
+        _disposables = new List<IDisposable>();
         _interactables = new List<InteractableEntity>();
         _current = new ReactiveProperty<InteractableEntity>();
-        CreateObjects();
-        _ctx.onInteractionButtonClick.Subscribe(OnInteractionButtonClick).AddTo(_disposables);
-    }
+        _mousePosition = new ReactiveProperty<Vector3>();
 
-    private void CreateObjects()
-    {
-        var table = UnityEngine.Object.Instantiate(_ctx.gameSet.table);
-
-        // var onSelect = new ReactiveCommand<InteractableEntity>();
-        // onSelect.Subscribe(OnInteractableSelected).AddTo(_disposables);
-        
-        var mousePosition = new ReactiveProperty<Vector3>();
-        
         var mouseHandler = new MouseHandler(new MouseHandler.Ctx
         {
             camera = _ctx.camera,
             current = _current,
             interactables = _interactables,
-            mousePosition = mousePosition,
-            //onSelectInteractable = 
+            mousePosition = _mousePosition,
         }).AddTo(_disposables);
 
+        _current.Subscribe(OnCurrentChange).AddTo(_disposables);
+        _ctx.onInteractionButtonClick.Subscribe(OnInteractionButtonClick).AddTo(_disposables);
+
+        CreateObjects();
+    }
+
+    private void CreateObjects()
+    {
+        var table = UnityEngine.Object.Instantiate(_ctx.gameSet.table);
+        var tBounds = table.GetComponent<Renderer>().bounds;
+        var tCenter = tBounds.center;
+        var tExtents = tBounds.extents;
 
         foreach (var set in _ctx.gameSet.interactableSets)
         {
             for (var i = 0; i < set.amount; i++)
             {
+                var x = Random.Range(-tExtents.x, tExtents.x);
+                var z = Random.Range(-tExtents.z, tExtents.z);
+                Vector3 position = new Vector3(x, tExtents.y, z);
+                position += tCenter;
+                
                 var interactableEntity = new InteractableEntity(new InteractableEntity.Ctx
                 {
                     prefab = set.prefab,
                     operationsSet = _ctx.operationsSet,
                     type = set.type,
                     operations = set.operations,
-                    mousePosition = mousePosition,
+                    mousePosition = _mousePosition,
+                    position = position,
                 });
 
                 _interactables.Add(interactableEntity);
             }
         }
-
-        _current.Subscribe(current =>
-        {
-            if (current == null)
-            {
-                if (_previous != null)
-                {
-                    //_previous.BackToNormal();
-                }
-            }
-            else
-            {
-                if (_previous != current)
-                {
-                    //_previous.BackToNormal();
-                    // current.SetSelected();
-                     _ctx.onSelectInteractable.Execute(current.Data.operations);
-                }
-            }
-            
-        }).AddTo(_disposables);
     }
 
-    
+    private void OnCurrentChange(InteractableEntity current)
+    {
+        if (current == null)
+        {
+            if (_previous != null)
+            {
+                //_previous.BackToNormal();
+                _previous = null;
+            }
+        }
+        else
+        {
+            if (_previous != current)
+            {
+                //_previous.BackToNormal();
+                _previous = current;
+                // current.SetSelected();
+                _ctx.onSelectInteractable.Execute(current.Data.operations);
+            }
+        }
+    }
 
     private void OnInteractionButtonClick(OperationTypes operation)
     {

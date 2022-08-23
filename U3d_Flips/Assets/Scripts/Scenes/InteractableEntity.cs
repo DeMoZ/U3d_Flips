@@ -13,6 +13,7 @@ public class InteractableEntity
         public InteractableTypes type;
         public List<OperationTypes> operations;
         public ReactiveProperty<Vector3> mousePosition;
+        public Vector3 position;
     }
 
     private Ctx _ctx;
@@ -32,7 +33,7 @@ public class InteractableEntity
         var onMouseStates = new ReactiveCommand<MouseStates>();
         onMouseStates.Subscribe(OnMouseStates);
         
-        _view = UnityEngine.GameObject.Instantiate(_ctx.prefab);
+        _view = UnityEngine.GameObject.Instantiate(_ctx.prefab, _ctx.position, Quaternion.identity);
 
         _view.SetCtx(new InteractableView.Ctx
         {

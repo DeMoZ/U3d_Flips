@@ -100,6 +100,7 @@ public class InteractableEntity
                     onDoOperation = _onDoOperation,
                     mousePosition = _ctx.mousePosition,
                     extents = _ctx.extents,
+                    time = time,
                 });
                 _operations.Add(drag);
                 return drag;

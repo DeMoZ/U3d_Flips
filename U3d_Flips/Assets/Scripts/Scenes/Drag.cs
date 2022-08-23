@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+using DG.Tweening;
 using UniRx;
 using UnityEngine;
 
@@ -9,11 +11,13 @@ public class Drag : AbstractOperation
         public ReactiveCommand<OperationTypes> onDoOperation;
         public ReactiveProperty<Vector3> mousePosition;
         public Vector3 extents;
+        public float time;
     }
     
     private int LayerMask => UnityEngine.LayerMask.GetMask("Ground");
     private new Ctx _ctx;
-    
+    private bool _inProcess ;
+
     public void SetCtx(Ctx ctx)
     {
         _ctx = ctx;
@@ -25,16 +29,21 @@ public class Drag : AbstractOperation
     public override OperationTypes GetOperationType =>
         _type;
     
-    protected override void Do(OperationTypes type)
+    protected override async void Do(OperationTypes type)
     {
-        if (_type != type)
+        if (_type != type || _inProcess)
             return;
+        
+        _inProcess = true;
         
         if (Physics.Raycast(_ctx.camera.ScreenPointToRay(_ctx.mousePosition.Value), out var hit, Mathf.Infinity, LayerMask))
         {
-            // TODO lerp position and/or count touch point offset and keep 
-            transform.position = hit.point + Vector3.up * _ctx.extents.y;
+            // TODO count touch point offset and keep 
+            transform.DOMove( hit.point + Vector3.up * _ctx.extents.y, _ctx.time);
         }
+        
+        await Task.Delay((int)(_ctx.time * 1000));
+        _inProcess = false;
     }
     
     private void OnDisable()

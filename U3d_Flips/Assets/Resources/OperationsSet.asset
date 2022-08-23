@@ -14,16 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactableSets:
   - operation: 0
+    enabled: 1
     hasButton: 1
     description: Flip
     duration: 0.5
     sprite: {fileID: 0}
   - operation: 1
+    enabled: 1
     hasButton: 1
     description: Rotate
     duration: 0.5
     sprite: {fileID: 0}
   - operation: 2
+    enabled: 1
     hasButton: 0
     description: 
     duration: 0.1

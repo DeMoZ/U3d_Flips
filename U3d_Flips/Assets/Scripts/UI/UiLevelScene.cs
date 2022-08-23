@@ -45,7 +45,7 @@ namespace UI
             {
                 var operation = _ctx.operationsSet.GetOperation(operationType);
 
-                if(!operation.hasButton) 
+                if(!operation.hasButton || !operation.enabled) 
                     continue;
                 
                 var btnGo = _ctx.pool.Get(_ctx.gameSet.buttonPrefab.gameObject);

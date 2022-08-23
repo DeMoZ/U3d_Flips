@@ -23,7 +23,8 @@ public class LevelScenePm : IDisposable
     private List<IDisposable> _disposables;
     private ReactiveProperty<Vector3> _mousePosition;
     private ReactiveCommand _onDragObject;
-
+    private bool _dragEnabled;
+    
     public LevelScenePm(Ctx ctx)
     {
         _ctx = ctx;
@@ -33,6 +34,9 @@ public class LevelScenePm : IDisposable
         _mousePosition = new ReactiveProperty<Vector3>();
         _onDragObject = new ReactiveCommand();
 
+        var dragOperation = _ctx.operationsSet.GetOperation(OperationTypes.Drag);
+        _dragEnabled = dragOperation != null && dragOperation.enabled;
+        
         var mouseHandler = new MouseHandler(new MouseHandler.Ctx
         {
             camera = _ctx.camera,
@@ -112,6 +116,9 @@ public class LevelScenePm : IDisposable
 
     private void OnDragObject()
     {
+        if (!_dragEnabled)
+            return;
+        
         Debug.Log($"[LevelScenePm] OnMouseDrag, _current = {_current.Value.View.name} :  {_mousePosition}");
         // TODO The drag operation way to different from the rest so it is better to separate from common operations logic
         _current.Value?.DoOperation(OperationTypes.Drag);

@@ -43,10 +43,14 @@ namespace UI
 
             foreach (var operationType in operationsTypes)
             {
+                var operation = _ctx.operationsSet.GetOperation(operationType);
+
+                if(!operation.hasButton) 
+                    continue;
+                
                 var btnGo = _ctx.pool.Get(_ctx.gameSet.buttonPrefab.gameObject);
                 var btn = btnGo.GetComponent<Button>();
                 btn.transform.SetParent(interactionsBtnParent);
-                var operation = _ctx.operationsSet.GetOperation(operationType);
                 
                 btn.GetComponentInChildren<TextMeshProUGUI>().text = operation.description;
                 btn.GetComponentInChildren<Image>().sprite = operation.sprite;

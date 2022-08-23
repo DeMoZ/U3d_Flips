@@ -19,6 +19,7 @@ public class OperationsSet : ScriptableObject
 public class Operation
 {
     [TableColumnWidth(70, false)] public OperationTypes operation;
+    [TableColumnWidth(70, false)] public bool hasButton;
     [TableColumnWidth(70, false)] public string description;
     [TableColumnWidth(70, false)] public float duration;
 

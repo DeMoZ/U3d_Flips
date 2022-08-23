@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UniRx;
+using UnityEngine;
 
 public class InteractableEntity
 {
@@ -11,7 +12,7 @@ public class InteractableEntity
         public OperationsSet operationsSet;
         public InteractableTypes type;
         public List<OperationTypes> operations;
-        public ReactiveCommand<InteractableEntity> onSelect;
+        public ReactiveProperty<Vector3> mousePosition;
     }
 
     private Ctx _ctx;
@@ -28,22 +29,18 @@ public class InteractableEntity
     {
         _ctx = ctx;
         _onDoOperation = new ReactiveCommand<OperationTypes>();
+        var onMouseStates = new ReactiveCommand<MouseStates>();
+        onMouseStates.Subscribe(OnMouseStates);
         
         _view = UnityEngine.GameObject.Instantiate(_ctx.prefab);
-        var onSelect = new ReactiveCommand();
-        onSelect.Subscribe(_ =>
+
+        _view.SetCtx(new InteractableView.Ctx
         {
-            _ctx.onSelect.Execute(this);
-        });
-        
-        View.SetCtx(new InteractableView.Ctx
-        {
-            onSelect = onSelect,
-            operations = _ctx.operations,
+            //onMouseStates = onMouseStates,
         });
         
         _operations = new();
-        _operations.AddRange(View.gameObject.GetComponents<AbstractOperation>());
+        _operations.AddRange(_view.gameObject.GetComponents<AbstractOperation>());
 
         foreach (var ctxOperation in _ctx.operations)
         {
@@ -53,31 +50,57 @@ public class InteractableEntity
         }
     }
 
+    private void OnMouseStates(MouseStates mouseStates)
+    {
+        switch (mouseStates)
+        {
+            case MouseStates.Down:
+                break;
+            case MouseStates.Up:
+                break;
+            case MouseStates.Drag:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(mouseStates), mouseStates, null);
+        }
+    }
+    
     private AbstractOperation AddOperation(OperationTypes type)
     {
         var time = _ctx.operationsSet.GetOperation(type).duration;
         switch (type)
         {
             case OperationTypes.Flip:
-                var flip = View.gameObject.AddComponent<Flip>();
-                flip.SetCtx(new AbstractOperation.Ctx
+                var flip = _view.gameObject.AddComponent<Flip>();
+                flip.SetCtx(new Flip.Ctx
                 {
                     time = time,
                     onDoOperation = _onDoOperation,
                 });
                 _operations.Add(flip);
                 return flip;
-                break;
+            
             case OperationTypes.Rotate:
-                var rotate = View.gameObject.AddComponent<Rotate>();
-                rotate.SetCtx(new AbstractOperation.Ctx
+                var rotate = _view.gameObject.AddComponent<Rotate>();
+                rotate.SetCtx(new Rotate.Ctx
                 {
                     time = time,
                     onDoOperation = _onDoOperation,
                 });
                 _operations.Add(rotate);
                 return rotate;
-                break;
+            
+            case OperationTypes.Drag:
+                var drag = _view.gameObject.AddComponent<Drag>();
+                drag.SetCtx(new Drag.Ctx
+                {
+                    time = time,
+                    onDoOperation = _onDoOperation,
+                    mousePosition = _ctx.mousePosition,
+                });
+                _operations.Add(drag);
+                return drag;
+
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, null);
         }

@@ -13,12 +13,12 @@ public enum OperationTypes
 {
     Flip,
     Rotate,
+    Drag
 }
 
-public enum InteractStates
+public enum MouseStates
 {
-    Select,
-    StartDrag,
-    ProcessDrag,
-    EndDrag,
+    Down,
+    Up,
+    Drag,
 }

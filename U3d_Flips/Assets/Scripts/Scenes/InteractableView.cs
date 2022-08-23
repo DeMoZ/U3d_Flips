@@ -1,16 +1,14 @@
-using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-public class InteractableView : MonoBehaviour, IPointerDownHandler, IPointerClickHandler, IPointerUpHandler,
-    IDragHandler
+public class InteractableView : MonoBehaviour
 {
     public struct Ctx
     {
-        public ReactiveCommand onSelect;
-        public ReactiveCommand<OperationTypes> onDoOperation;
-        public List<OperationTypes> operations;
+        // public ReactiveCommand onSelect;
+        // public ReactiveCommand onRelease;
+
+        //public ReactiveCommand<MouseStates> onMouseStates;
     }
     
     private Ctx _ctx;
@@ -19,47 +17,30 @@ public class InteractableView : MonoBehaviour, IPointerDownHandler, IPointerClic
     {
         _ctx = ctx;
     }
-
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        Debug.Log($"OnPointerClick on {name}");
-        _ctx.onSelect.Execute();
-    }
-
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        Debug.Log($"OnBeginDrag on {name}");
-    }
-
-    private void OnMouseUpAsButton()
-    {
-        OnInteract();
-    }
-
-    public virtual void OnInteract()
-    {
-        Debug.Log($"click on {name}");
-        _ctx.onSelect.Execute();
-    }
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        Debug.Log($"OnPointerDown on {name}");
-    }
-
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        Debug.Log($"OnPointerUp on {name}");
-    }
-
-    public void OnMouseDown()
+    
+    /*private void OnMouseDown()
     {
         Debug.Log($"OnMouseDown on {name}");
+        //_ctx.onSelect.Execute();
+        _ctx.onMouseStates.Execute(MouseStates.Down);
     }
 
-    public void OnDrag(PointerEventData eventData)
+    private void OnMouseDrag()
     {
-        Debug.Log($"OnDrag on {name}");
+        Debug.Log($"OnMouseDrag");
+        _ctx.onMouseStates.Execute(MouseStates.Down);
     }
+    
+    private void OnMouseUpAsButton()
+    {
+        Debug.Log($"OnMouseUpAsButton");
+        //_ctx.onRelease.Execute();
+        _ctx.onMouseStates.Execute(MouseStates.Up);
+    }
+
+    private void OnMouseUp()
+    {
+        Debug.Log($"OnMouseUp");
+        _ctx.onMouseStates.Execute(MouseStates.Up);
+    }*/
 }

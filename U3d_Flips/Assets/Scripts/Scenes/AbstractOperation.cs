@@ -14,9 +14,13 @@ public abstract class AbstractOperation : MonoBehaviour
     public void SetCtx(Ctx ctx)
     {
         _ctx = ctx;
-        _ctx.onDoOperation.Subscribe(Do);
+        _ctx.onDoOperation.Subscribe(Do).AddTo(this);
     }
 
     protected abstract void Do(OperationTypes type);
     public abstract OperationTypes GetOperationType { get; }
+
+    private void OnDisable()
+    {
+    }
 }

@@ -35,7 +35,7 @@ public class InteractableEntity
         var onMouseStates = new ReactiveCommand<MouseStates>();
         onMouseStates.Subscribe(OnMouseStates);
         
-        _view = UnityEngine.GameObject.Instantiate(_ctx.prefab, _ctx.position, Quaternion.identity);
+        _view = UnityEngine.Object.Instantiate(_ctx.prefab, _ctx.position, Quaternion.identity);
 
         _view.SetCtx(new InteractableView.Ctx
         {

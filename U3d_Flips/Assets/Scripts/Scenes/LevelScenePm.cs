@@ -78,6 +78,7 @@ public class LevelScenePm : IDisposable
                     operations = set.operations,
                     mousePosition = _mousePosition,
                     position = position,
+                    extents = oExtents,
                 });
 
                 _interactables.Add(interactableEntity);

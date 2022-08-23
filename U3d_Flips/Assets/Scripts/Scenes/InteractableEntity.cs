@@ -15,6 +15,7 @@ public class InteractableEntity
         public List<OperationTypes> operations;
         public ReactiveProperty<Vector3> mousePosition;
         public Vector3 position;
+        public Vector3 extents;
     }
 
     private Ctx _ctx;
@@ -98,6 +99,7 @@ public class InteractableEntity
                     camera = _ctx.camera,
                     onDoOperation = _onDoOperation,
                     mousePosition = _ctx.mousePosition,
+                    extents = _ctx.extents,
                 });
                 _operations.Add(drag);
                 return drag;

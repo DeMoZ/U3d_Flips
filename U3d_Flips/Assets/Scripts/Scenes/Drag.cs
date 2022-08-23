@@ -8,9 +8,10 @@ public class Drag : AbstractOperation
         public Camera camera;
         public ReactiveCommand<OperationTypes> onDoOperation;
         public ReactiveProperty<Vector3> mousePosition;
+        public Vector3 extents;
     }
     
-    private int _layerMask =>LayerMask.GetMask("Ground");
+    private int LayerMask => UnityEngine.LayerMask.GetMask("Ground");
     private new Ctx _ctx;
     
     public void SetCtx(Ctx ctx)
@@ -29,9 +30,10 @@ public class Drag : AbstractOperation
         if (_type != type)
             return;
         
-        if (Physics.Raycast(_ctx.camera.ScreenPointToRay(Input.mousePosition), out var hit, Mathf.Infinity, _layerMask))
+        if (Physics.Raycast(_ctx.camera.ScreenPointToRay(_ctx.mousePosition.Value), out var hit, Mathf.Infinity, LayerMask))
         {
-            transform.position = hit.point;
+            // TODO lerp position and/or count touch point offset and keep 
+            transform.position = hit.point + Vector3.up * _ctx.extents.y;
         }
     }
     

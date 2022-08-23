@@ -56,11 +56,13 @@ public class LevelScenePm : IDisposable
         {
             for (var i = 0; i < set.amount; i++)
             {
-                var x = Random.Range(-tExtents.x, tExtents.x);
-                var z = Random.Range(-tExtents.z, tExtents.z);
-                Vector3 position = new Vector3(x, tExtents.y, z);
-                position += tCenter;
-                
+                var oBounds = set.prefab.GetComponent<Renderer>().bounds;
+                var oExtents = oBounds.extents;
+
+                var x = Random.Range(-tExtents.x + oExtents.x, tExtents.x - oExtents.x);
+                var z = Random.Range(-tExtents.z + oExtents.z, tExtents.z - oExtents.z);
+                var position = new Vector3(x, tExtents.y + oExtents.y + tExtents.y, z) + tCenter;
+
                 var interactableEntity = new InteractableEntity(new InteractableEntity.Ctx
                 {
                     prefab = set.prefab,

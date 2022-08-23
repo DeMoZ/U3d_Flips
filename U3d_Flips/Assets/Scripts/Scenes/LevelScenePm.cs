@@ -22,7 +22,7 @@ public class LevelScenePm : IDisposable
     private ReactiveCommand<OperationTypes> _onDoOperation;
     private List<IDisposable> _disposables;
     private ReactiveProperty<Vector3> _mousePosition;
-    private ReactiveCommand _onMouseDrag;
+    private ReactiveCommand _onDragObject;
 
     public LevelScenePm(Ctx ctx)
     {
@@ -31,19 +31,19 @@ public class LevelScenePm : IDisposable
         _interactables = new List<InteractableEntity>();
         _current = new ReactiveProperty<InteractableEntity>();
         _mousePosition = new ReactiveProperty<Vector3>();
-        _onMouseDrag = new ReactiveCommand();
+        _onDragObject = new ReactiveCommand();
 
         var mouseHandler = new MouseHandler(new MouseHandler.Ctx
         {
             camera = _ctx.camera,
             current = _current,
             interactables = _interactables,
-            onMouseDrag = _onMouseDrag,
+            onDragObject = _onDragObject,
             mousePosition = _mousePosition,
         }).AddTo(_disposables);
 
         _current.SkipLatestValueOnSubscribe().Subscribe(OnCurrentChange).AddTo(_disposables);
-        _onMouseDrag.Subscribe(_ => OnMouseDrag()).AddTo(_disposables);
+        _onDragObject.Subscribe(_ => OnDragObject()).AddTo(_disposables);
         _ctx.onInteractionButtonClick.Subscribe(OnInteractionButtonClick).AddTo(_disposables);
 
         CreateObjects();
@@ -71,6 +71,7 @@ public class LevelScenePm : IDisposable
 
                 var interactableEntity = new InteractableEntity(new InteractableEntity.Ctx
                 {
+                    camera = _ctx.camera,
                     prefab = set.prefab,
                     operationsSet = _ctx.operationsSet,
                     type = set.type,
@@ -108,14 +109,11 @@ public class LevelScenePm : IDisposable
         }
     }
 
-    private void OnMouseDrag()
+    private void OnDragObject()
     {
-        if (_current.Value == null) 
-            return;
-        
         Debug.Log($"[LevelScenePm] OnMouseDrag, _current = {_current.Value.View.name} :  {_mousePosition}");
-
-        // TODO _current.Value.View.transform.position = 
+        // TODO The drag operation way to different from the rest so it is better to separate from common operations logic
+        _current.Value?.DoOperation(OperationTypes.Drag);
     }
     
     private void OnInteractionButtonClick(OperationTypes operation)

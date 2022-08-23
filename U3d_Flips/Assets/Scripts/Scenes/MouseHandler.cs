@@ -10,7 +10,7 @@ public class MouseHandler : IDisposable
         public Camera camera;
         public ReactiveProperty<InteractableEntity> current;
         public ReactiveProperty<Vector3> mousePosition;
-        public ReactiveCommand onMouseDrag;
+        public ReactiveCommand onDragObject;
         public List<InteractableEntity> interactables;
     }
 
@@ -56,7 +56,9 @@ public class MouseHandler : IDisposable
     {
         _startPosition = null;
         _repeatSelect = false;
-        _ctx.onMouseDrag.Execute();
+        
+        if (_ctx.current.Value != null)
+            _ctx.onDragObject.Execute();
     }
 
     private void OnMouseUp()

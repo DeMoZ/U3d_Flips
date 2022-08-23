@@ -3,6 +3,9 @@ using UnityEngine;
 
 public abstract class AbstractOperation : MonoBehaviour
 {
+    // it is Unnecessary for that class to be monoBehaviour
+    // TODO can be refactored
+    
     public struct Ctx
     {
         public float time;

@@ -1,14 +1,12 @@
-using UniRx;
 using UnityEngine;
 
 public class InteractableView : MonoBehaviour
 {
+    // the class acts more like a Marker
+    // TODO replace whole the logic with layer (or can be tagged)
     public struct Ctx
     {
-        // public ReactiveCommand onSelect;
-        // public ReactiveCommand onRelease;
-
-        //public ReactiveCommand<MouseStates> onMouseStates;
+       
     }
     
     private Ctx _ctx;

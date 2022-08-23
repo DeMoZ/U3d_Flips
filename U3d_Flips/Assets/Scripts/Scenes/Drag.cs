@@ -5,11 +5,12 @@ public class Drag : AbstractOperation
 {
     public new struct Ctx
     {
-        public float time;
+        public Camera camera;
         public ReactiveCommand<OperationTypes> onDoOperation;
         public ReactiveProperty<Vector3> mousePosition;
     }
     
+    private int _layerMask =>LayerMask.GetMask("Ground");
     private new Ctx _ctx;
     
     public void SetCtx(Ctx ctx)
@@ -22,15 +23,16 @@ public class Drag : AbstractOperation
    
     public override OperationTypes GetOperationType =>
         _type;
+    
     protected override void Do(OperationTypes type)
     {
         if (_type != type)
             return;
         
-        Debug.Log($"[{this}]");
-
-       
-        
+        if (Physics.Raycast(_ctx.camera.ScreenPointToRay(Input.mousePosition), out var hit, Mathf.Infinity, _layerMask))
+        {
+            transform.position = hit.point;
+        }
     }
     
     private void OnDisable()

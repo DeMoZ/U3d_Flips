@@ -8,6 +8,7 @@ public class InteractableEntity
 {
     public struct Ctx
     {
+        public Camera camera;
         public InteractableView prefab;
         public OperationsSet operationsSet;
         public InteractableTypes type;
@@ -37,7 +38,6 @@ public class InteractableEntity
 
         _view.SetCtx(new InteractableView.Ctx
         {
-            //onMouseStates = onMouseStates,
         });
         
         _operations = new();
@@ -95,7 +95,7 @@ public class InteractableEntity
                 var drag = _view.gameObject.AddComponent<Drag>();
                 drag.SetCtx(new Drag.Ctx
                 {
-                    time = time,
+                    camera = _ctx.camera,
                     onDoOperation = _onDoOperation,
                     mousePosition = _ctx.mousePosition,
                 });

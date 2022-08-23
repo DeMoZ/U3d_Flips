@@ -22,6 +22,7 @@ public class LevelScenePm : IDisposable
     private ReactiveCommand<OperationTypes> _onDoOperation;
     private List<IDisposable> _disposables;
     private ReactiveProperty<Vector3> _mousePosition;
+    private ReactiveCommand _onMouseDrag;
 
     public LevelScenePm(Ctx ctx)
     {
@@ -30,16 +31,19 @@ public class LevelScenePm : IDisposable
         _interactables = new List<InteractableEntity>();
         _current = new ReactiveProperty<InteractableEntity>();
         _mousePosition = new ReactiveProperty<Vector3>();
+        _onMouseDrag = new ReactiveCommand();
 
         var mouseHandler = new MouseHandler(new MouseHandler.Ctx
         {
             camera = _ctx.camera,
             current = _current,
             interactables = _interactables,
+            onMouseDrag = _onMouseDrag,
             mousePosition = _mousePosition,
         }).AddTo(_disposables);
 
-        _current.Subscribe(OnCurrentChange).AddTo(_disposables);
+        _current.SkipLatestValueOnSubscribe().Subscribe(OnCurrentChange).AddTo(_disposables);
+        _onMouseDrag.Subscribe(_ => OnMouseDrag()).AddTo(_disposables);
         _ctx.onInteractionButtonClick.Subscribe(OnInteractionButtonClick).AddTo(_disposables);
 
         CreateObjects();
@@ -47,6 +51,8 @@ public class LevelScenePm : IDisposable
 
     private void CreateObjects()
     {
+        // TODO here can be used overlap box
+
         var table = UnityEngine.Object.Instantiate(_ctx.gameSet.table);
         var tBounds = table.GetComponent<Renderer>().bounds;
         var tCenter = tBounds.center;
@@ -84,22 +90,34 @@ public class LevelScenePm : IDisposable
         {
             if (_previous != null)
             {
-                //_previous.BackToNormal();
+                // TODO _previous.BackToNormal();
                 _previous = null;
             }
+
+            _ctx.onSelectInteractable.Execute(new List<OperationTypes>());
         }
         else
         {
             if (_previous != current)
             {
-                //_previous.BackToNormal();
+                // TODO _previous.BackToNormal();
                 _previous = current;
-                // current.SetSelected();
+                // TODO current.SetSelected();
                 _ctx.onSelectInteractable.Execute(current.Data.operations);
             }
         }
     }
 
+    private void OnMouseDrag()
+    {
+        if (_current.Value == null) 
+            return;
+        
+        Debug.Log($"[LevelScenePm] OnMouseDrag, _current = {_current.Value.View.name} :  {_mousePosition}");
+
+        // TODO _current.Value.View.transform.position = 
+    }
+    
     private void OnInteractionButtonClick(OperationTypes operation)
     {
         Debug.Log($"[LevelScenePm] OnInteractionButtonClick");

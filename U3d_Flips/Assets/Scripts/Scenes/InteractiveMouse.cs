@@ -10,13 +10,14 @@ public class InteractiveMouse : IDisposable
         public Camera camera;
         public ReactiveProperty<Vector3> mousePosition;
         public ReactiveCommand<InteractableView> onMouseSelect;
-        public ReactiveCommand onMouseRelease;
         public ReactiveCommand onMouseDrag;
         public ReactiveCommand onMouseUp;
     }
 
     private Ctx _ctx;
     private List<IDisposable> _disposables;
+    private Vector3? _previous;
+    
     public InteractiveMouse(Ctx ctx)
     {
         _ctx = ctx;
@@ -52,28 +53,36 @@ public class InteractiveMouse : IDisposable
 
     private void OnMomentMouseDown()
     {
+        _previous = Input.mousePosition;
+        _ctx.mousePosition.Value = Input.mousePosition;
+        
         RaycastHit hit;
         if (Physics.Raycast(_ctx.camera.ScreenPointToRay(Input.mousePosition), out hit))
         {
             if (hit.transform.TryGetComponent<InteractableView>(out var view))
             {
-                _ctx.mousePosition.Value = Input.mousePosition;
                 _ctx.onMouseSelect.Execute(view);
                 return;
             }
         }
         
-        _ctx.onMouseRelease.Execute();
+        _ctx.onMouseSelect.Execute(null);
     }
 
     private void OnWhileMouseDown()
     {
+        if (_previous.HasValue && (_previous.Value - Input.mousePosition).magnitude < 0.001f)
+            return;
+        
+        _previous = Input.mousePosition;
+
         _ctx.mousePosition.Value = Input.mousePosition;
         _ctx.onMouseDrag.Execute();
     }
     
     private void OnMomentMouseUp()
     {
+        _previous = null;
         _ctx.mousePosition.Value = Input.mousePosition;
         _ctx.onMouseUp.Execute();
     }

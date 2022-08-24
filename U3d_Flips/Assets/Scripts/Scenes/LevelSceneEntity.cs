@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using DataLoad;
 using UI;
 using UniRx;
 using UnityEngine;
@@ -8,17 +10,36 @@ public class LevelSceneEntity : IGameScene
 {
     public struct Ctx
     {
+        public Container<Task> constructorTask;
     }
 
     private Ctx _ctx;
     private UiLevelScene _ui;
     private Dictionary<InteractableTypes, int> _amountData;
+    private List<Sprite> _sprites;
     private List<IDisposable> _disposables;
 
     public LevelSceneEntity(Ctx ctx)
     {
         _ctx = ctx;
-        _disposables = new();
+        _disposables = new List<IDisposable>();
+
+        AsyncConstructor();
+    }
+
+    private void AsyncConstructor()
+    {
+        _ctx.constructorTask.Value = ConstructorTask();
+    }
+
+    private async Task ConstructorTask()
+    {
+        var imageLoader = new StrAssetImageLoader("Textures");
+        _disposables.Add(imageLoader);
+        var sprites = await imageLoader.LoadImages();
+        
+        // await Task.Yield();
+        // await Task.Delay(5 * 1000);
     }
 
     public void Enter()

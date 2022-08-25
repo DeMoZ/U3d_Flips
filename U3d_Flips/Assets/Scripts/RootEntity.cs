@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 
@@ -13,13 +12,13 @@ public class RootEntity : IDisposable
     
     private ReactiveCommand<bool> _onBoo;
 
-    private List<IDisposable> _diposables;
+    private CompositeDisposable _diposables;
 
     public RootEntity(Ctx ctx)
     {
         Debug.Log($"[RootEntity][time] Loading scene start.. {Time.realtimeSinceStartup}");
         _ctx = ctx;
-        _diposables = new List<IDisposable>();
+        _diposables = new CompositeDisposable();
         
         var onSwitchScene = new ReactiveCommand<GameScenes>();
         
@@ -35,7 +34,6 @@ public class RootEntity : IDisposable
 
     public void Dispose()
     {
-        foreach (var disposable in _diposables)
-            disposable.Dispose();
+        _diposables.Dispose();
     }
 }

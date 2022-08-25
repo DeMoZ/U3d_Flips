@@ -25,7 +25,7 @@ public class InteractableEntity : IDisposable
     private List<AbstractOperation> _operations;
     private InteractableView _view;
     private ReactiveCommand<OperationTypes> _onDoOperation;
-    private List<IDisposable> _disposables;
+    private CompositeDisposable _disposables;
 
     public Ctx Data => _ctx;
 
@@ -34,7 +34,7 @@ public class InteractableEntity : IDisposable
     public InteractableEntity(Ctx ctx)
     {
         _ctx = ctx;
-        _disposables = new List<IDisposable>();
+        _disposables = new CompositeDisposable();
         
         _onDoOperation = new ReactiveCommand<OperationTypes>().AddTo(_disposables);
         var onMouseStates = new ReactiveCommand<MouseStates>();
@@ -130,7 +130,6 @@ public class InteractableEntity : IDisposable
 
     public void Dispose()
     {
-        foreach (var disposable in _disposables) 
-            disposable?.Dispose();
+        _disposables.Dispose();
     }
 }

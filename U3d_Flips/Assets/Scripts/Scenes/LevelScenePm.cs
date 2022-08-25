@@ -21,7 +21,7 @@ public class LevelScenePm : IDisposable
     private ReactiveProperty<InteractableEntity> _current;
     private InteractableEntity _previous;
     private ReactiveCommand<OperationTypes> _onDoOperation;
-    private List<IDisposable> _disposables;
+    private CompositeDisposable _disposables;
     private ReactiveProperty<Vector3> _mousePosition;
     private ReactiveCommand _onDragObject;
     private ReactiveCommand<(InteractableEntity entity, bool isSelected)> _onColorChange;
@@ -30,7 +30,7 @@ public class LevelScenePm : IDisposable
     public LevelScenePm(Ctx ctx)
     {
         _ctx = ctx;
-        _disposables = new List<IDisposable>();
+        _disposables = new CompositeDisposable();
         _interactables = new List<InteractableEntity>();
         _current = new ReactiveProperty<InteractableEntity>();
         _mousePosition = new ReactiveProperty<Vector3>();
@@ -158,7 +158,6 @@ public class LevelScenePm : IDisposable
 
     public void Dispose()
     {
-        foreach (var d in _disposables)
-            d.Dispose();
+        _disposables.Dispose();
     }
 }

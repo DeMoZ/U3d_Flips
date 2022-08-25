@@ -19,7 +19,7 @@ public class InteractiveMouse : IDisposable
     private int _layerMask = LayerMask.NameToLayer("UI");
 
     private Ctx _ctx;
-    private List<IDisposable> _disposables;
+    private CompositeDisposable _disposables;
     private Vector3? _previous;
 
     public InteractiveMouse(Ctx ctx)
@@ -106,7 +106,6 @@ public class InteractiveMouse : IDisposable
 
     public void Dispose()
     {
-        foreach (var d in _disposables)
-            d.Dispose();
+        _disposables.Dispose();
     }
 }

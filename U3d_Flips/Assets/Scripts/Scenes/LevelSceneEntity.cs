@@ -17,12 +17,12 @@ public class LevelSceneEntity : IGameScene
     private UiLevelScene _ui;
     private Dictionary<InteractableTypes, int> _amountData;
     private List<Texture2D> _textures;
-    private List<IDisposable> _disposables;
+    private CompositeDisposable _disposables;
 
     public LevelSceneEntity(Ctx ctx)
     {
         _ctx = ctx;
-        _disposables = new List<IDisposable>();
+        _disposables = new ();
 
         AsyncConstructor();
     }
@@ -84,7 +84,6 @@ public class LevelSceneEntity : IGameScene
 
     public void Dispose()
     {
-        foreach (var d in _disposables)
-            d.Dispose();
+        _disposables.Dispose();
     }
 }

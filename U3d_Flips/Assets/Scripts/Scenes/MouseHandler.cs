@@ -15,7 +15,7 @@ public class MouseHandler : IDisposable
     }
 
     private Ctx _ctx;
-    private List<IDisposable> _disposables;
+    private CompositeDisposable _disposables;
     private Vector3? _startPosition;
     private bool _repeatSelect;
 
@@ -75,7 +75,6 @@ public class MouseHandler : IDisposable
 
     public void Dispose()
     {
-        foreach (var d in _disposables)
-            d.Dispose();
+        _disposables.Dispose();
     }
 }

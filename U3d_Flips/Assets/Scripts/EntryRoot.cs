@@ -1,15 +1,16 @@
 using System;
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 
 public class EntryRoot : MonoBehaviour
 {
-    private List<IDisposable> _disposables;
+    private CompositeDisposable _disposables;
     private void Awake()
     {
         Debug.Log($"[EntryRoot][time] Loading scene start.. {Time.realtimeSinceStartup}");
         
-        _disposables = new List<IDisposable>();
+        _disposables = new CompositeDisposable();
         
         CreateAppSettings();
         CreateRootEntity();
@@ -24,6 +25,11 @@ public class EntryRoot : MonoBehaviour
         var rootEntity = new RootEntity(new RootEntity.Ctx
         {
             
-        });
+        }).AddTo(_disposables);
+    }
+
+    private void OnDestroy()
+    {
+        _disposables.Dispose();
     }
 }

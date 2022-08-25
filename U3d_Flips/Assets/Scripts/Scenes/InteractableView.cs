@@ -12,11 +12,11 @@ public class InteractableView : MonoBehaviour, IDisposable
     }
     
     private Ctx _ctx;
-    private List<IDisposable> _disposables;
+    private CompositeDisposable _disposables;
     public void SetCtx(Ctx ctx)
     {
         _ctx = ctx;
-        _disposables = new List<IDisposable>();
+        _disposables = new CompositeDisposable();
         
         var rigidbody = GetComponent<Rigidbody>();
         var material = GetComponent<Renderer>().material;
@@ -33,8 +33,7 @@ public class InteractableView : MonoBehaviour, IDisposable
     
     public void Dispose()
     {
-        foreach (var disposable in _disposables) 
-            disposable?.Dispose();
+        _disposables.Dispose();
     }
     
     /*private void OnMouseDown()

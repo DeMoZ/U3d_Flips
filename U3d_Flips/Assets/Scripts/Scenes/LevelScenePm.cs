@@ -13,6 +13,7 @@ public class LevelScenePm : IDisposable
         public OperationsSet operationsSet;
         public ReactiveCommand<List<OperationTypes>> onSelectInteractable;
         public ReactiveCommand<OperationTypes> onInteractionButtonClick;
+        public List<Texture2D> textures;
     }
 
     private Ctx _ctx;
@@ -62,6 +63,9 @@ public class LevelScenePm : IDisposable
         var tCenter = tBounds.center;
         var tExtents = tBounds.extents;
 
+        var textures = new List<Texture2D>();
+        textures.AddRange(_ctx.textures);
+        
         foreach (var set in _ctx.gameSet.interactableSets)
         {
             for (var i = 0; i < set.amount; i++)
@@ -73,6 +77,8 @@ public class LevelScenePm : IDisposable
                 var z = Random.Range(-tExtents.z + oExtents.z, tExtents.z - oExtents.z);
                 var position = new Vector3(x, tExtents.y + oExtents.y + tExtents.y, z) + tCenter;
 
+                Texture2D texture = RandomTexture(textures);
+
                 var interactableEntity = new InteractableEntity(new InteractableEntity.Ctx
                 {
                     camera = _ctx.camera,
@@ -83,11 +89,28 @@ public class LevelScenePm : IDisposable
                     mousePosition = _mousePosition,
                     position = position,
                     extents = oExtents,
+                    texture = texture,
                 });
 
                 _interactables.Add(interactableEntity);
             }
         }
+    }
+
+    private Texture2D RandomTexture(List<Texture2D> textures)
+    {
+        Texture2D texture;
+        if (textures.Count > 0)
+        {
+            texture = textures[Random.Range(0, textures.Count)];
+            textures.Remove(texture);
+        }
+        else
+        {
+            texture = null;
+        }
+
+        return texture;
     }
 
     private void OnCurrentChange(InteractableEntity current)

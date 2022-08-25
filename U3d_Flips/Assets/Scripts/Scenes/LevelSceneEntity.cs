@@ -16,7 +16,7 @@ public class LevelSceneEntity : IGameScene
     private Ctx _ctx;
     private UiLevelScene _ui;
     private Dictionary<InteractableTypes, int> _amountData;
-    private List<Sprite> _sprites;
+    private List<Texture2D> _textures;
     private List<IDisposable> _disposables;
 
     public LevelSceneEntity(Ctx ctx)
@@ -36,7 +36,7 @@ public class LevelSceneEntity : IGameScene
     {
         var imageLoader = new StrAssetImageLoader("Textures");
         _disposables.Add(imageLoader);
-        var sprites = await imageLoader.LoadImages();
+        _textures = await imageLoader.LoadImages();
         
         // await Task.Yield();
         // await Task.Delay(5 * 1000);
@@ -55,13 +55,14 @@ public class LevelSceneEntity : IGameScene
         _ui = UnityEngine.GameObject.FindObjectOfType<UiLevelScene>();
         var uiPool = new Pool(new GameObject("uiPool").transform);
 
-        var menuScenePm = new LevelScenePm(new LevelScenePm.Ctx
+        var scenePm = new LevelScenePm(new LevelScenePm.Ctx
         {
             camera = camera,
             gameSet = gameSet,
             operationsSet = operationsSet,
             onSelectInteractable = onSelectInteractable,
             onInteractionButtonClick = onInteractionButtonClick,
+            textures = _textures,
         }).AddTo(_disposables);
 
 

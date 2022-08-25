@@ -7,6 +7,6 @@ namespace DataLoad
 {
     public interface IImageLoader : IDisposable
     {
-        Task<List<Sprite>> LoadImages();
+        Task<List<Texture2D>> LoadImages();
     }
 }

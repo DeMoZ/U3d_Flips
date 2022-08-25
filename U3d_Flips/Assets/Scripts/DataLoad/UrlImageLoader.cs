@@ -16,10 +16,10 @@ namespace DataLoad
             _endPoint = endPoint;
         }
 
-        public async Task<List<Sprite>> LoadImages()
+        public async Task<List<Texture2D>> LoadImages()
         {
             var urls = await GetUrls();
-            var sprites = new List<Sprite>();
+            var sprites = new List<Texture2D>();
 
             foreach (var url in urls)
             {
@@ -40,7 +40,7 @@ namespace DataLoad
             return new List<string>();
         }
     
-        private async Task<Sprite> Load(string url)
+        private async Task<Texture2D> Load(string url)
         {
             // await download image from url, return sprite
             await Task.Yield();

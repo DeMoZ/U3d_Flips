@@ -2,11 +2,9 @@ using UnityEngine;
 
 public class InteractableView : MonoBehaviour
 {
-    // the class acts more like a Marker
-    // TODO replace whole the logic with layer (or can be tagged)
     public struct Ctx
     {
-       
+        public Texture2D texture;
     }
     
     private Ctx _ctx;
@@ -14,6 +12,9 @@ public class InteractableView : MonoBehaviour
     public void SetCtx(Ctx ctx)
     {
         _ctx = ctx;
+
+        var material = GetComponent<Renderer>().material;
+        material.mainTexture = _ctx.texture;
     }
     
     /*private void OnMouseDown()

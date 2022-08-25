@@ -16,6 +16,7 @@ public class InteractableEntity
         public ReactiveProperty<Vector3> mousePosition;
         public Vector3 position;
         public Vector3 extents;
+        public Texture2D texture;
     }
 
     private Ctx _ctx;
@@ -39,6 +40,7 @@ public class InteractableEntity
 
         _view.SetCtx(new InteractableView.Ctx
         {
+            texture = _ctx.texture,
         });
         
         _operations = new();

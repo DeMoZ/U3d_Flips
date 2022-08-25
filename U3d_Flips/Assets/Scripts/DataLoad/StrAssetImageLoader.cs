@@ -17,7 +17,7 @@ namespace DataLoad
             _path = Path.Combine(Application.streamingAssetsPath, folder);
         }
 
-        public async Task<List<Sprite>> LoadImages()
+        public async Task<List<Texture2D>> LoadImages()
         {
             var allFiles = new List<string>();
             foreach (var filter in _filters)
@@ -26,25 +26,25 @@ namespace DataLoad
                 allFiles.AddRange(found);
             }
 
-            var sprites = new List<Sprite>();
+            var textures = new List<Texture2D>();
             foreach (var file in allFiles)
             {
                 Debug.Log($"[StrAssetImageLoader] load texture by path: {file}");
-                sprites.Add(await Load(file));
+                textures.Add(await Load(file));
             }
 
             await Task.Yield();
-            return sprites;
+            return textures;
         }
 
-        private async Task<Sprite> Load(string path)
+        private async Task<Texture2D> Load(string path)
         {
             byte[] bytes = await File.ReadAllBytesAsync(path);
 
             Texture2D tex = new Texture2D(2, 2);
             tex.LoadImage(bytes);
-            return Sprite.Create(tex, new Rect(0.0f, 0.0f, tex.width, tex.height), new Vector2(0.5f, 0.5f),
-                100.0f);
+            // return Sprite.Create(tex, new Rect(0.0f, 0.0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100.0f);
+            return tex;
         }
 
         public void Dispose()

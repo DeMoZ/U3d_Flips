@@ -4,7 +4,7 @@ using System.Linq;
 using UniRx;
 using UnityEngine;
 
-public class InteractableEntity
+public class InteractableEntity : IDisposable
 {
     public struct Ctx
     {
@@ -17,6 +17,7 @@ public class InteractableEntity
         public Vector3 position;
         public Vector3 extents;
         public Texture2D texture;
+        public ReactiveCommand<(InteractableEntity entity, bool isSelected)> onColorChange;
     }
 
     private Ctx _ctx;
@@ -24,6 +25,7 @@ public class InteractableEntity
     private List<AbstractOperation> _operations;
     private InteractableView _view;
     private ReactiveCommand<OperationTypes> _onDoOperation;
+    private List<IDisposable> _disposables;
 
     public Ctx Data => _ctx;
 
@@ -32,15 +34,24 @@ public class InteractableEntity
     public InteractableEntity(Ctx ctx)
     {
         _ctx = ctx;
-        _onDoOperation = new ReactiveCommand<OperationTypes>();
+        _disposables = new List<IDisposable>();
+        
+        _onDoOperation = new ReactiveCommand<OperationTypes>().AddTo(_disposables);
         var onMouseStates = new ReactiveCommand<MouseStates>();
-        onMouseStates.Subscribe(OnMouseStates);
+        onMouseStates.Subscribe(OnMouseStates).AddTo(_disposables);
+        var onColorChange = new ReactiveCommand<bool>();
+        _ctx.onColorChange.Subscribe(command =>
+        {
+            if (command.entity == this)
+                onColorChange.Execute(command.isSelected);
+        }).AddTo(_disposables);
         
         _view = UnityEngine.Object.Instantiate(_ctx.prefab, _ctx.position, Quaternion.identity);
 
         _view.SetCtx(new InteractableView.Ctx
         {
             texture = _ctx.texture,
+            onColorChange = onColorChange,
         });
         
         _operations = new();
@@ -115,5 +126,11 @@ public class InteractableEntity
     public void DoOperation(OperationTypes operation)
     {
         _onDoOperation.Execute(operation);
+    }
+
+    public void Dispose()
+    {
+        foreach (var disposable in _disposables) 
+            disposable?.Dispose();
     }
 }

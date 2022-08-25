@@ -36,21 +36,21 @@ public class InteractiveMouse : IDisposable
         // on mouse down moment
         Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0)).Subscribe(_ =>
         {
-            Debug.Log($"[InteractMousePm][GetMouseButtonDown] {Input.mousePosition}");
+            //Debug.Log($"[InteractMousePm][GetMouseButtonDown] {Input.mousePosition}");
             OnMomentMouseDown();
         }).AddTo(_disposables);
 
         // while mouse down
         Observable.EveryUpdate().Where(_ => Input.GetMouseButton(0)).Subscribe(_ =>
         {
-            Debug.Log($"[InteractMousePm][GetMouseButton] {Input.mousePosition}");
+            //Debug.Log($"[InteractMousePm][GetMouseButton] {Input.mousePosition}");
             OnWhileMouseDown();
         }).AddTo(_disposables);
 
         // on mouse up moment
         Observable.EveryUpdate().Where(_ => Input.GetMouseButtonUp(0)).Subscribe(_ =>
         {
-            Debug.Log($"[InteractMousePm][GetMouseButtonUp] {Input.mousePosition}");
+            //Debug.Log($"[InteractMousePm][GetMouseButtonUp] {Input.mousePosition}");
             OnMomentMouseUp();
         }).AddTo(_disposables);
     }

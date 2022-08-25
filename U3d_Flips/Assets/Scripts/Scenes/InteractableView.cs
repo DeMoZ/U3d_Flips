@@ -1,20 +1,40 @@
+using System;
+using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 
-public class InteractableView : MonoBehaviour
+public class InteractableView : MonoBehaviour, IDisposable
 {
     public struct Ctx
     {
         public Texture2D texture;
+        public ReactiveCommand<bool> onColorChange;
     }
     
     private Ctx _ctx;
-
+    private List<IDisposable> _disposables;
     public void SetCtx(Ctx ctx)
     {
         _ctx = ctx;
-
+        _disposables = new List<IDisposable>();
+        
+        var rigidbody = GetComponent<Rigidbody>();
         var material = GetComponent<Renderer>().material;
         material.mainTexture = _ctx.texture;
+
+        
+        _ctx.onColorChange.Subscribe(isSelected =>
+        {
+            material.color = isSelected ? Color.gray : Color.white;
+            rigidbody.isKinematic = isSelected;
+        }).AddTo(_disposables);
+        
+    }
+    
+    public void Dispose()
+    {
+        foreach (var disposable in _disposables) 
+            disposable?.Dispose();
     }
     
     /*private void OnMouseDown()

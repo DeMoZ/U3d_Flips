@@ -24,8 +24,9 @@ public class LevelScenePm : IDisposable
     private List<IDisposable> _disposables;
     private ReactiveProperty<Vector3> _mousePosition;
     private ReactiveCommand _onDragObject;
+    private ReactiveCommand<(InteractableEntity entity, bool isSelected)> _onColorChange;
     private bool _dragEnabled;
-    
+
     public LevelScenePm(Ctx ctx)
     {
         _ctx = ctx;
@@ -34,10 +35,11 @@ public class LevelScenePm : IDisposable
         _current = new ReactiveProperty<InteractableEntity>();
         _mousePosition = new ReactiveProperty<Vector3>();
         _onDragObject = new ReactiveCommand();
+        _onColorChange = new ReactiveCommand<(InteractableEntity entity, bool isSelected)>();
 
         var dragOperation = _ctx.operationsSet.GetOperation(OperationTypes.Drag);
         _dragEnabled = dragOperation != null && dragOperation.enabled;
-        
+
         var mouseHandler = new MouseHandler(new MouseHandler.Ctx
         {
             camera = _ctx.camera,
@@ -65,7 +67,7 @@ public class LevelScenePm : IDisposable
 
         var textures = new List<Texture2D>();
         textures.AddRange(_ctx.textures);
-        
+
         foreach (var set in _ctx.gameSet.interactableSets)
         {
             for (var i = 0; i < set.amount; i++)
@@ -90,6 +92,7 @@ public class LevelScenePm : IDisposable
                     position = position,
                     extents = oExtents,
                     texture = texture,
+                    onColorChange = _onColorChange,
                 });
 
                 _interactables.Add(interactableEntity);
@@ -119,7 +122,7 @@ public class LevelScenePm : IDisposable
         {
             if (_previous != null)
             {
-                // TODO _previous.BackToNormal();
+                _onColorChange.Execute((_previous, false));
                 _previous = null;
             }
 
@@ -129,9 +132,9 @@ public class LevelScenePm : IDisposable
         {
             if (_previous != current)
             {
-                // TODO _previous.BackToNormal();
+                _onColorChange.Execute((_previous, false));
                 _previous = current;
-                // TODO current.SetSelected();
+                _onColorChange.Execute((current, true));
                 _ctx.onSelectInteractable.Execute(current.Data.operations);
             }
         }
@@ -141,12 +144,12 @@ public class LevelScenePm : IDisposable
     {
         if (!_dragEnabled)
             return;
-        
-        Debug.Log($"[LevelScenePm] OnMouseDrag, _current = {_current.Value.View.name} :  {_mousePosition}");
+
+        // Debug.Log($"[LevelScenePm] OnMouseDrag, _current = {_current.Value.View.name} :  {_mousePosition}");
         // TODO The drag operation way to different from the rest so it is better to separate from common operations logic
         _current.Value?.DoOperation(OperationTypes.Drag);
     }
-    
+
     private void OnInteractionButtonClick(OperationTypes operation)
     {
         Debug.Log($"[LevelScenePm] OnInteractionButtonClick");

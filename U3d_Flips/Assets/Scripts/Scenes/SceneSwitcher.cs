@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using UniRx;
 using UnityEngine;
@@ -9,23 +8,48 @@ public class SceneSwitcher : IDisposable
 {
     public struct Ctx
     {
+        public string startApplicationSceneName;
         public ReactiveCommand<GameScenes> onSwitchScene;
     }
 
+    private const string ROOT_SCENE = "1_RootScene";
     private const string MENU_SCENE = "MenuScene";
     private const string SWITCH_SCENE = "2_SwitchScene";
     private const string LEVEL_SCENE = "LevelScene";
 
     private Ctx _ctx;
-    private List<IDisposable> _diposables;
+    private CompositeDisposable _diposables;
 
     private IGameScene _currentScene;
 
     public SceneSwitcher(Ctx ctx)
     {
         _ctx = ctx;
-        _diposables = new List<IDisposable>();
+        _diposables = new CompositeDisposable();
         _ctx.onSwitchScene.Subscribe(OnSwitchScene).AddTo(_diposables);
+        SelectSceneForStartApplication();
+    }
+
+    private void SelectSceneForStartApplication()
+    {
+        switch (_ctx.startApplicationSceneName)
+        {
+            // case ROOT_SCENE:
+            //     _ctx.onSwitchScene.Execute(GameScenes.Menu);
+            //     break;
+            // case MENU_SCENE:
+            //     _ctx.onSwitchScene.Execute(GameScenes.Menu);
+            //     break;
+            // case SWITCH_SCENE:
+            //     _ctx.onSwitchScene.Execute(GameScenes.Menu);
+            //     break;
+            // case LEVEL_SCENE:
+            //     _ctx.onSwitchScene.Execute(GameScenes.Level1);
+            //     break;
+            default:
+                _ctx.onSwitchScene.Execute(GameScenes.Level1);
+                break;
+        }
     }
 
     private void OnSwitchScene(GameScenes scene)
@@ -36,11 +60,11 @@ public class SceneSwitcher : IDisposable
             .Do(x =>
             {
                 // call during the process
-                Debug.Log($"[RootEntity][SwitchScenes] Async load scene {SWITCH_SCENE} progress: " +
+                Debug.Log($"[{this}][OnSwitchScene] Async load scene {SWITCH_SCENE} progress: " +
                           x.progress); // show progress
             }).Subscribe(_ =>
             {
-                Debug.Log($"[RootEntity][SwitchScenes] Async load scene {SWITCH_SCENE} done");
+                Debug.Log($"[{this}][OnSwitchScene] Async load scene {SWITCH_SCENE} done");
                 OnSwitchSceneLoaded(scene);
             }));
     }
@@ -54,8 +78,8 @@ public class SceneSwitcher : IDisposable
             onLoadingProcess = onLoadingProcess,
         });
 
-        Debug.Log($"[RootEntity][OnSwitchSceneLoaded] Start load scene {scene}");
-        
+        Debug.Log($"[{this}][OnSwitchSceneLoaded] Start load scene {scene}");
+
         _currentScene = await SceneEntity(scene);
 
         _diposables.Add(SceneManager.LoadSceneAsync(GetSceneName(scene)) // async load scene
@@ -63,10 +87,10 @@ public class SceneSwitcher : IDisposable
             .Do(x =>
             {
                 // call during the process
-                Debug.Log($"[RootEntity][OnSwitchSceneLoaded] Async load scene {scene} progress: " +
+                Debug.Log($"[{this}][OnSwitchSceneLoaded] Async load scene {scene} progress: " +
                           x.progress); // show progress
                 onLoadingProcess.Value = x.progress.ToString();
-            }).Subscribe( _ =>
+            }).Subscribe(_ =>
             {
                 switchSceneEntity.Exit();
                 switchSceneEntity.Dispose();
@@ -91,7 +115,7 @@ public class SceneSwitcher : IDisposable
         {
             GameScenes.Menu => LoadMenu(),
             GameScenes.Level1 => await LoadLevel1(),
-            _ => await LoadLevel1()
+            _ => LoadMenu()
         };
 
         return newScene;
@@ -102,10 +126,9 @@ public class SceneSwitcher : IDisposable
         return new MenuSceneEntity(new MenuSceneEntity.Ctx
         {
             scene = GameScenes.Menu,
-            //onPlayClicked = onPlayClicked,
+            onSwitchScene = _ctx.onSwitchScene,
         });
     }
-
 
     private async Task<IGameScene> LoadLevel1()
     {
@@ -121,9 +144,7 @@ public class SceneSwitcher : IDisposable
 
     public void Dispose()
     {
-        foreach (var disposable in _diposables)
-            disposable.Dispose();
-
+        _diposables.Dispose();
         _currentScene.Dispose();
     }
 }

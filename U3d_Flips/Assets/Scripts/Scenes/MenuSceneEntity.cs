@@ -1,19 +1,17 @@
 using UI;
 using UniRx;
-using UnityEngine;
 
 public class MenuSceneEntity : IGameScene
 {
     public struct Ctx
     {
         public GameScenes scene;
-        public ReactiveCommand onPlayClicked { get; set; }
+        public ReactiveCommand<GameScenes> onSwitchScene;
     }
 
     private Ctx _ctx;
     private UiMenuScene _ui;
 
-    private ReactiveCommand _onClickPlay;
     private ReactiveCommand _onClickNewGame;
     private ReactiveCommand _onClickSettings;
 
@@ -21,7 +19,6 @@ public class MenuSceneEntity : IGameScene
     {
         _ctx = ctx;
 
-        _onClickPlay = new();
         _onClickNewGame = new();
         _onClickSettings = new();
     }
@@ -30,9 +27,9 @@ public class MenuSceneEntity : IGameScene
     {
         var menuScenePm = new MenuScenePm(new MenuScenePm.Ctx
         {
-            onClickPlay = _onClickPlay,
-            onClickNewGame = _onClickNewGame,
-            onClickSettings = _onClickSettings,
+            // onClickPlay = _ctx.onClickPlay,
+            // onClickNewGame = _onClickNewGame,
+            // onClickSettings = _onClickSettings,
         });
         
         // Find UI or instantiate from Addressable
@@ -41,7 +38,7 @@ public class MenuSceneEntity : IGameScene
         
         _ui.SetCtx(new UiMenuScene.Ctx
         {
-            onClickPlay = _onClickPlay,
+            onSwitchScene = _ctx.onSwitchScene,
             onClickNewGame = _onClickNewGame,
             onClickSettings = _onClickSettings,
         });
@@ -49,7 +46,6 @@ public class MenuSceneEntity : IGameScene
 
     public void Exit()
     {
-        throw new System.NotImplementedException();
     }
 
     public void Dispose()

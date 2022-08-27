@@ -8,9 +8,9 @@ namespace UI
     {
         public struct Ctx
         {
-            public ReactiveCommand onClickPlay;
             public ReactiveCommand onClickNewGame;
             public ReactiveCommand onClickSettings;
+            public ReactiveCommand<GameScenes> onSwitchScene { get; set; }
         }
 
         [SerializeField] private Button playBtn = default;
@@ -30,7 +30,7 @@ namespace UI
         private void OnClickPlay()
         { 
             Debug.Log("[UiMenuScene] OnClickPlay");
-            _ctx.onClickPlay.Execute();
+            _ctx.onSwitchScene.Execute(GameScenes.Level1);
         }
         private void OnClickNewGame()
         { 

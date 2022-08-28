@@ -11,9 +11,10 @@ public class EntryRoot : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            Destroy(this);
             return;
         }
-        
+
         DontDestroyOnLoad(this.gameObject);
         
         Debug.Log($"[EntryRoot][time] Loading scene start.. {Time.realtimeSinceStartup}");

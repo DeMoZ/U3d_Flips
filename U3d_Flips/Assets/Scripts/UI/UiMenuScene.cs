@@ -14,8 +14,8 @@ namespace UI
         }
 
         [SerializeField] private Button playBtn = default;
-        [SerializeField] private Button newGameBtn = default;
-        [SerializeField] private Button settingsBtn = default;
+        //[SerializeField] private Button newGameBtn = default;
+        //[SerializeField] private Button settingsBtn = default;
        
         private Ctx _ctx;
 
@@ -23,8 +23,8 @@ namespace UI
         {
             _ctx = ctx;
             playBtn.onClick.AddListener(OnClickPlay);
-            newGameBtn.onClick.AddListener(OnClickNewGame);
-            settingsBtn.onClick.AddListener(OnClickSettings);
+            //newGameBtn.onClick.AddListener(OnClickNewGame);
+            //settingsBtn.onClick.AddListener(OnClickSettings);
         }
 
         private void OnClickPlay()

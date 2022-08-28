@@ -7,6 +7,7 @@ public class MenuSceneEntity : IGameScene
     {
         public GameScenes scene;
         public ReactiveCommand<GameScenes> onSwitchScene;
+        public ReactiveCommand onClickPlay;
     }
 
     private Ctx _ctx;
@@ -27,9 +28,6 @@ public class MenuSceneEntity : IGameScene
     {
         var menuScenePm = new MenuScenePm(new MenuScenePm.Ctx
         {
-            // onClickPlay = _ctx.onClickPlay,
-            // onClickNewGame = _onClickNewGame,
-            // onClickSettings = _onClickSettings,
         });
         
         // Find UI or instantiate from Addressable

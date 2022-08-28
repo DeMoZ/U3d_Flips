@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    public class UiLevelScene : MonoBehaviour
+    public class UiLevelScene : MonoBehaviour, IDisposable
     {
         public struct Ctx
         {
@@ -18,14 +18,17 @@ namespace UI
             public OperationsSet operationsSet;
             public ReactiveCommand<List<OperationTypes>> onSelectInteractable;
             public ReactiveCommand<OperationTypes> onInteractionButtonClick;
+            public ReactiveCommand<GameScenes> onSwitchScene;
             public Pool pool;
         }
 
         private const float FADE_TIME = 0.3f;
 
+        [SerializeField] private Button menuButton = default;
         [SerializeField] private Transform interactionsBtnParent = default;
 
         private Ctx _ctx;
+        private CompositeDisposable _disposables;
         private List<Button> _currentOperations = new();
         private CanvasGroup _interactionBtnsCanvasGroup;
 
@@ -33,8 +36,10 @@ namespace UI
         {
             _interactionBtnsCanvasGroup = interactionsBtnParent.GetComponent<CanvasGroup>();
             _ctx = ctx;
+            _disposables = new CompositeDisposable();
             List<IDisposable> a = new List<IDisposable>();
-            _ctx.onSelectInteractable.Subscribe(OnSelectInteractable);
+            _ctx.onSelectInteractable.Subscribe(OnSelectInteractable).AddTo(_disposables);
+            menuButton.onClick.AddListener(() => _ctx.onSwitchScene.Execute(GameScenes.Menu));
         }
 
         private async void OnSelectInteractable(List<OperationTypes> operationsTypes)
@@ -46,20 +51,17 @@ namespace UI
             {
                 var operation = _ctx.operationsSet.GetOperation(operationType);
 
-                if(!operation.hasButton || !operation.enabled) 
+                if (!operation.hasButton || !operation.enabled)
                     continue;
-                
+
                 var btnGo = _ctx.pool.Get(_ctx.gameSet.buttonPrefab.gameObject);
                 var btn = btnGo.GetComponent<Button>();
                 btn.transform.SetParent(interactionsBtnParent);
-                
+
                 btn.GetComponentInChildren<TextMeshProUGUI>().text = operation.description;
                 btn.GetComponentInChildren<Image>().sprite = operation.sprite;
-                
-                btn.onClick.AddListener(() =>
-                {
-                    _ctx.onInteractionButtonClick.Execute(operationType);
-                });
+
+                btn.onClick.AddListener(() => { _ctx.onInteractionButtonClick.Execute(operationType); });
 
                 _currentOperations.Add(btn);
                 btnGo.SetActive(true);
@@ -87,6 +89,11 @@ namespace UI
             }
 
             _currentOperations.Clear();
+        }
+
+        public void Dispose()
+        {
+            _disposables?.Dispose();
         }
     }
 }

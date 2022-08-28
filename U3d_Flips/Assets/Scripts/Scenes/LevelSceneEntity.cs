@@ -12,6 +12,7 @@ public class LevelSceneEntity : IGameScene
     public struct Ctx
     {
         public Container<Task> constructorTask;
+        public ReactiveCommand<GameScenes> onSwitchScene;
     }
 
     private Ctx _ctx;
@@ -48,8 +49,8 @@ public class LevelSceneEntity : IGameScene
         var operationsSet = Resources.Load<OperationsSet>("OperationsSet");
         var gameSet = Resources.Load<GameSet>("GameSet");
 
-        var onSelectInteractable = new ReactiveCommand<List<OperationTypes>>();
-        var onInteractionButtonClick = new ReactiveCommand<OperationTypes>();
+        var onSelectInteractable = new ReactiveCommand<List<OperationTypes>>().AddTo(_disposables);
+        var onInteractionButtonClick = new ReactiveCommand<OperationTypes>().AddTo(_disposables);
 
         // from prefab, or find, or addressable
         var camera = UnityEngine.GameObject.FindObjectOfType<Camera>();
@@ -74,6 +75,7 @@ public class LevelSceneEntity : IGameScene
             onSelectInteractable = onSelectInteractable,
             onInteractionButtonClick = onInteractionButtonClick,
             pool = uiPool,
+            onSwitchScene = _ctx.onSwitchScene,
         });
 
         Debug.Log("[LevelSceneEntity] Entered");

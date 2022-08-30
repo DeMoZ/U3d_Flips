@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Configs;
@@ -53,8 +52,8 @@ public class LevelSceneEntity : IGameScene
         var onInteractionButtonClick = new ReactiveCommand<OperationTypes>().AddTo(_disposables);
 
         // from prefab, or find, or addressable
-        var camera = UnityEngine.GameObject.FindObjectOfType<Camera>();
         _ui = UnityEngine.GameObject.FindObjectOfType<UiLevelScene>();
+        var camera = _ui.Camera;
         var uiPool = new Pool(new GameObject("uiPool").transform);
 
         var scenePm = new LevelScenePm(new LevelScenePm.Ctx

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using UI;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Configs
 {
@@ -8,7 +8,7 @@ namespace Configs
     public class GameSet : ScriptableObject
     {
         public GameObject table = default;
-        public Button buttonPrefab = default;
+        public OperationButton buttonPrefab = default;
         public List<InteractableSet> interactableSets = default;
     }
 

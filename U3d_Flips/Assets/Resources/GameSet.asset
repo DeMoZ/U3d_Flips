@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GameSet
   m_EditorClassIdentifier: 
   table: {fileID: 3105442825360241376, guid: b2b3bddd42c064a7a9ec7f84675b22c2, type: 3}
-  buttonPrefab: {fileID: 4305876090954055654, guid: 022b0cd199bd943b690a35007d2c304f, type: 3}
+  buttonPrefab: {fileID: -4515261792346251908, guid: 022b0cd199bd943b690a35007d2c304f, type: 3}
   interactableSets:
   - type: 0
     operations: 020000000100000000000000

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Configs;
 using DG.Tweening;
-using TMPro;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,17 +23,20 @@ namespace UI
 
         private const float FADE_TIME = 0.3f;
 
+        [SerializeField] private Camera _camera = default;
         [SerializeField] private Button menuButton = default;
         [SerializeField] private Transform interactionsBtnParent = default;
+        [SerializeField] private CanvasGroup interactionBtnsCanvasGroup;
 
         private Ctx _ctx;
         private CompositeDisposable _disposables;
-        private List<Button> _currentOperations = new();
-        private CanvasGroup _interactionBtnsCanvasGroup;
+        private List<OperationButton> _currentOperations = new();
 
+        public Camera Camera =>
+            _camera;
+        
         public void SetCtx(Ctx ctx)
         {
-            _interactionBtnsCanvasGroup = interactionsBtnParent.GetComponent<CanvasGroup>();
             _ctx = ctx;
             _disposables = new CompositeDisposable();
             List<IDisposable> a = new List<IDisposable>();
@@ -55,13 +57,13 @@ namespace UI
                     continue;
 
                 var btnGo = _ctx.pool.Get(_ctx.gameSet.buttonPrefab.gameObject);
-                var btn = btnGo.GetComponent<Button>();
+                var btn = btnGo.GetComponent<OperationButton>();
                 btn.transform.SetParent(interactionsBtnParent);
 
-                btn.GetComponentInChildren<TextMeshProUGUI>().text = operation.description;
-                btn.GetComponentInChildren<Image>().sprite = operation.sprite;
+                btn.SetText(operation.description);
+                btn.SetImage(operation.sprite);
 
-                btn.onClick.AddListener(() => { _ctx.onInteractionButtonClick.Execute(operationType); });
+                btn.Button.onClick.AddListener(() => { _ctx.onInteractionButtonClick.Execute(operationType); });
 
                 _currentOperations.Add(btn);
                 btnGo.SetActive(true);
@@ -72,20 +74,20 @@ namespace UI
 
         private void ShowOperations()
         {
-            _interactionBtnsCanvasGroup.alpha = 0;
-            _interactionBtnsCanvasGroup.DOFade(1, FADE_TIME);
+            interactionBtnsCanvasGroup.alpha = 0;
+            interactionBtnsCanvasGroup.DOFade(1, FADE_TIME);
         }
 
         private async Task HideOperations()
         {
-            _interactionBtnsCanvasGroup.DOFade(0, FADE_TIME);
+            interactionBtnsCanvasGroup.DOFade(0, FADE_TIME);
 
             await Task.Delay((int) (FADE_TIME * 1000));
 
             foreach (var btn in _currentOperations)
             {
                 _ctx.pool.Return(btn.gameObject);
-                btn.onClick.RemoveAllListeners();
+                btn.Button.onClick.RemoveAllListeners();
             }
 
             _currentOperations.Clear();

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 
@@ -10,7 +9,10 @@ public class InteractableView : MonoBehaviour, IDisposable
         public Texture2D texture;
         public ReactiveCommand<bool> onColorChange;
     }
-    
+
+    [SerializeField] private Rigidbody _rigidbody = default;
+    [SerializeField] private Renderer _renderer = default;
+
     private Ctx _ctx;
     private CompositeDisposable _disposables;
     public void SetCtx(Ctx ctx)
@@ -18,15 +20,13 @@ public class InteractableView : MonoBehaviour, IDisposable
         _ctx = ctx;
         _disposables = new CompositeDisposable();
         
-        var rigidbody = GetComponent<Rigidbody>();
-        var material = GetComponent<Renderer>().material;
+        var material = _renderer.material;
         material.mainTexture = _ctx.texture;
 
-        
         _ctx.onColorChange.Subscribe(isSelected =>
         {
             material.color = isSelected ? Color.gray : Color.white;
-            rigidbody.isKinematic = isSelected;
+            _rigidbody.isKinematic = isSelected;
         }).AddTo(_disposables);
         
     }

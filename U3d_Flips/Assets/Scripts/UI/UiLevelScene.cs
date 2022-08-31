@@ -5,6 +5,7 @@ using Configs;
 using DG.Tweening;
 using UniRx;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
 
 namespace UI
@@ -31,6 +32,7 @@ namespace UI
         private Ctx _ctx;
         private CompositeDisposable _disposables;
         private List<OperationButton> _currentOperations = new();
+        private GameObject _cashedBtn;
 
         public Camera Camera =>
             _camera;
@@ -49,14 +51,17 @@ namespace UI
             if (_currentOperations.Count > 0)
                 await HideOperations();
 
+            var handle = Addressables.InstantiateAsync(_ctx.gameSet.buttonRef);
+            _cashedBtn = await handle.Task;
+
             foreach (var operationType in operationsTypes)
             {
                 var operation = _ctx.operationsSet.GetOperation(operationType);
 
                 if (!operation.hasButton || !operation.enabled)
                     continue;
-
-                var btnGo = _ctx.pool.Get(_ctx.gameSet.buttonPrefab.gameObject);
+                
+                var btnGo = _ctx.pool.Get(_cashedBtn);
                 var btn = btnGo.GetComponent<OperationButton>();
                 btn.transform.SetParent(interactionsBtnParent);
 
@@ -93,6 +98,17 @@ namespace UI
             _currentOperations.Clear();
         }
 
+        private void UnloadAssets()
+        {
+            Debug.Log($"[{this}] Released Addressables");
+
+            if (_cashedBtn == null) return;
+
+            _cashedBtn.SetActive(false);
+            Addressables.ReleaseInstance(_cashedBtn);
+            _cashedBtn = null;
+        }
+        
         public void Dispose()
         {
             _disposables?.Dispose();

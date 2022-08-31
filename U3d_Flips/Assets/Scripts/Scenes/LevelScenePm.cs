@@ -4,6 +4,7 @@ using Configs;
 using Mouse;
 using UniRx;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using Random = UnityEngine.Random;
 
 public class LevelScenePm : IDisposable
@@ -28,7 +29,7 @@ public class LevelScenePm : IDisposable
     private ReactiveCommand _onDragObject;
     private ReactiveCommand<(InteractableEntity entity, bool isSelected)> _onColorChange;
     private bool _dragEnabled;
-
+    private List<GameObject> _cashedObjects;
     public LevelScenePm(Ctx ctx)
     {
         _ctx = ctx;
@@ -38,7 +39,8 @@ public class LevelScenePm : IDisposable
         _mousePosition = new ReactiveProperty<Vector3>();
         _onDragObject = new ReactiveCommand();
         _onColorChange = new ReactiveCommand<(InteractableEntity entity, bool isSelected)>();
-
+        _cashedObjects = new List<GameObject>();
+        
         var dragOperation = _ctx.operationsSet.GetOperation(OperationTypes.Drag);
         _dragEnabled = dragOperation != null && dragOperation.enabled;
 
@@ -58,12 +60,14 @@ public class LevelScenePm : IDisposable
         CreateObjects();
     }
 
-    private void CreateObjects()
+    private async void CreateObjects()
     {
         // TODO here can be used overlap box
-
-        var table = UnityEngine.Object.Instantiate(_ctx.gameSet.table);
-        var tBounds = table.GetComponent<Renderer>().bounds;
+        var handle = Addressables.InstantiateAsync(_ctx.gameSet.tableRef);
+        var cashedTable = await handle.Task;
+        _cashedObjects.Add(cashedTable);
+        
+        var tBounds = cashedTable.GetComponent<Renderer>().bounds;
         var tCenter = tBounds.center;
         var tExtents = tBounds.extents;
 
@@ -72,11 +76,16 @@ public class LevelScenePm : IDisposable
 
         foreach (var set in _ctx.gameSet.interactableSets)
         {
+            handle = Addressables.LoadAssetAsync<GameObject>(set.interactableRef);
+            var cashed = await handle.Task;
+            _cashedObjects.Add(cashed);
+            var interactable = cashed.GetComponent<InteractableView>();
+            
+            var oBounds = cashed.GetComponent<Renderer>().bounds;
+            var oExtents = oBounds.extents;
+            
             for (var i = 0; i < set.amount; i++)
             {
-                var oBounds = set.prefab.GetComponent<Renderer>().bounds;
-                var oExtents = oBounds.extents;
-
                 var x = Random.Range(-tExtents.x + oExtents.x, tExtents.x - oExtents.x);
                 var z = Random.Range(-tExtents.z + oExtents.z, tExtents.z - oExtents.z);
                 var position = new Vector3(x, tExtents.y + oExtents.y + tExtents.y, z) + tCenter;
@@ -86,7 +95,7 @@ public class LevelScenePm : IDisposable
                 var interactableEntity = new InteractableEntity(new InteractableEntity.Ctx
                 {
                     camera = _ctx.camera,
-                    prefab = set.prefab,
+                    prefab = interactable,
                     operationsSet = _ctx.operationsSet,
                     type = set.type,
                     operations = set.operations,
@@ -158,8 +167,24 @@ public class LevelScenePm : IDisposable
         _current.Value?.DoOperation(operation);
     }
 
+    private void UnloadAssets()
+    {
+        Debug.Log($"[{this}] Released Addressables");
+
+        foreach (var cashedObject in _cashedObjects)
+        {
+            if (cashedObject == null) continue;
+
+            cashedObject.SetActive(false);
+            Addressables.ReleaseInstance(cashedObject);
+        }
+        
+        _cashedObjects.Clear();
+    }
+    
     public void Dispose()
     {
+        UnloadAssets();
         _disposables.Dispose();
     }
 }

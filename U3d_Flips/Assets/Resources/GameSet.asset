@@ -12,14 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00bd730c2a07471da964858360b46b89, type: 3}
   m_Name: GameSet
   m_EditorClassIdentifier: 
-  table: {fileID: 3105442825360241376, guid: b2b3bddd42c064a7a9ec7f84675b22c2, type: 3}
-  buttonPrefab: {fileID: -4515261792346251908, guid: 022b0cd199bd943b690a35007d2c304f, type: 3}
+  tableRef:
+    m_AssetGUID: b2b3bddd42c064a7a9ec7f84675b22c2
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  buttonRef:
+    m_AssetGUID: 022b0cd199bd943b690a35007d2c304f
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
   interactableSets:
   - type: 0
     operations: 020000000100000000000000
     amount: 5
-    prefab: {fileID: 5719494121699220272, guid: 44e156e17400544588869232899ee81b, type: 3}
+    interactableRef:
+      m_AssetGUID: 44e156e17400544588869232899ee81b
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - type: 1
     operations: 0200000001000000
     amount: 5
-    prefab: {fileID: -2623766277410879898, guid: 1c225655eeefe4114aa8b7481d55c661, type: 3}
+    interactableRef:
+      m_AssetGUID: 1c225655eeefe4114aa8b7481d55c661
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0

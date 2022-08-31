@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 21a264af749514a7cbc891a52ad48052
+  m_SerializeEntries:
+  - m_GUID: b2b3bddd42c064a7a9ec7f84675b22c2
+    m_Address: Assets/Prefabs/Table.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 022b0cd199bd943b690a35007d2c304f
+    m_Address: Assets/Prefabs/OperationBtn.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 1c225655eeefe4114aa8b7481d55c661
+    m_Address: Assets/Prefabs/Volume.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 44e156e17400544588869232899ee81b
+    m_Address: Assets/Prefabs/Flat.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 75cefbcfe5c614f66a48c399044b248a, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 3bde509a560b540ec8d616e92c46f229, type: 2}
+    - {fileID: 11400000, guid: 235ab687e91b948f1b09127db4ab6591, type: 2}

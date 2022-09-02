@@ -87,5 +87,6 @@ public class LevelSceneEntity : IGameScene
     public void Dispose()
     {
         _disposables.Dispose();
+        Resources.UnloadUnusedAssets();
     }
 }
